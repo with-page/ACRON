@@ -526,44 +526,31 @@
             display: none;
         }
 
-        /* 📌 [정렬 버그 수정] 나이, 작위, 보유 능력을 정밀하게 세로 정렬하는 Row 구조 */
+        /* 나이와 작위 정렬 구역 */
         .modal-sub-info {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 20px;
             margin-bottom: 20px;
             padding: 0 4px;
         }
-        
+        .modal-sub-info .info-item {
+            display: flex;
+            align-items: center; /* 배지와 텍스트 세로 한 줄 정확히 맞춰 정렬 */
+            gap: 8px;
+            margin-bottom: 0;
+        }
+        .modal-sub-info .info-item p {
+            font-size: 0.98rem;  /* 다른 본문 글씨와 크기 및 두께 완벽 매칭 */
+            font-weight: 500;
+            color: #3d3021;
+            margin-top: 0;       /* 세로 뒤틀림 마진 즉시 리셋 */
+            line-height: 1;      /* 텍스트 기본 하이트 높낮이 상쇄 */
+        }
+
         .info-item { 
             margin-bottom: 18px; 
         }
-        
-        /* 📌 [배치 개선] 나이, 작위, 보유능력 배지를 수평 Row 구조로 통일하여 정확히 매칭 */
-        .modal-sub-info .info-item-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .modal-sub-info .info-item-row strong {
-            display: inline-block;
-            color: #7c5829;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            background: rgba(124, 88, 41, 0.12);
-            padding: 4px 10px;
-            border-radius: 4px;
-            min-width: 80px; /* 배지 가로 폭을 완전히 통일하여 우측 글씨들이 정확하게 가로줄 정렬되도록 조정 */
-            text-align: center;
-        }
-        .modal-sub-info .info-item-row p {
-            font-size: 0.98rem;
-            font-weight: 500;
-            color: #3d3021;
-            line-height: 1;
-            margin-top: 0;
-        }
-
         .info-item strong { 
             display: inline-block; 
             color: #7c5829; 
@@ -807,20 +794,19 @@
                         </div>
                         <span id="modal-badge" class="rank">Rank</span>
                     </div>
-                    <!-- 📌 [레이아웃 정돈] 나이, 작위, 보유능력을 모두 깔끔한 가로줄 리스트로 구조 통일 -->
                     <div class="modal-sub-info">
-                        <div class="info-item-row">
+                        <div class="info-item">
                             <strong>나이</strong>
                             <p id="modal-age">-</p>
                         </div>
-                        <div class="info-item-row">
+                        <div class="info-item">
                             <strong>작위</strong>
                             <p id="modal-title">-</p>
                         </div>
-                        <div class="info-item-row">
-                            <strong>보유 능력</strong>
-                            <p id="modal-ability">-</p>
-                        </div>
+                    </div>
+                    <div class="info-item">
+                        <strong>보유 능력</strong>
+                        <p id="modal-ability">능력 내용</p>
                     </div>
                     <div class="info-item">
                         <strong>상세 설명</strong>
@@ -870,7 +856,7 @@
             const response = await fetch('data.json');
             characters = await response.json();
             
-            // 📌 로드된 데이터를 기반으로 실존 등급 필터 버튼을 동적 생성
+            // 📌 [신규 추가] 로드된 데이터를 기반으로 실존 등급 필터 버튼을 동적 생성
             renderRankFilters();
             
             renderCharacters();
@@ -888,7 +874,7 @@
         }
     }
 
-    // 📌 로드된 캐릭터 데이터를 기반으로 실제 있는 등급만 뽑아 필터 버튼 생성
+    // 📌 [신규 추가] 로드된 캐릭터 데이터를 기반으로 실제 있는 등급만 뽑아 필터 버튼 생성
     function renderRankFilters() {
         const container = document.getElementById('rank-filters');
         if (!container) return;
