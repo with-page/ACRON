@@ -1,4 +1,6 @@
-/* 기본 리셋 및 폰트 적용 */
+/* ==========================================
+    기본 리셋 및 폰트 적용
+========================================== */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +15,9 @@ body {
     overflow-x: hidden;
 }
 
-/* 헤더 - 웅장한 느낌 */
+/* ==========================================
+    헤더 디자인 (웅장한 판타지풍)
+========================================== */
 header {
     text-align: center;
     padding: 60px 20px 30px;
@@ -33,7 +37,9 @@ header p {
     font-size: 1.1rem;
 }
 
-/* 메인 양피지 보드 */
+/* ==========================================
+    메인 양피지 보드
+========================================== */
 .registry {
     width: min(1400px, 95%);
     margin: 0 auto 60px;
@@ -56,7 +62,9 @@ header p {
     color: #5c4328;
 }
 
-/* 검색창 디자인 개선 */
+/* ==========================================
+    검색창 및 필터 버튼
+========================================== */
 .search-box {
     display: flex;
     justify-content: center;
@@ -81,7 +89,6 @@ header p {
     box-shadow: 0 0 10px rgba(178, 140, 90, 0.4);
 }
 
-/* 필터 버튼 스타일 */
 .filter-wrapper {
     display: flex;
     flex-direction: column;
@@ -115,14 +122,15 @@ header p {
     border-color: #7c5829;
 }
 
-/* 카드 그리드 배치 안정화 */
+/* ==========================================
+    캐릭터 카드 그리드 & 개별 디자인
+========================================== */
 .character-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 25px;
 }
 
-/* 카드 개별 디자인 */
 .card {
     background: #fcf7eb;
     border: 1px solid #cbb38d;
@@ -153,7 +161,7 @@ header p {
     margin-bottom: 8px;
 }
 
-/* 등급 뱃지 공통 */
+/* 등급 뱃지 색상 */
 .rank {
     display: inline-block;
     padding: 3px 12px;
@@ -162,15 +170,15 @@ header p {
     font-weight: bold;
     letter-spacing: 1px;
 }
-/* 등급별 색상 지정 (원하는 대로 커스텀 가능) */
 .rank[data-rank="SS"] { background: #d4af37; color: #fff; }
 .rank[data-rank="S"] { background: #e26d5c; color: #fff; }
 .rank[data-rank="A"] { background: #9b5de5; color: #fff; }
 .rank[data-rank="B"] { background: #00bbf9; color: #fff; }
 .rank[data-rank="C"], .rank[data-rank="D"], .rank[data-rank="F"] { background: #8d99ae; color: #fff; }
 
-/* -------------------------------------- */
-/* 상세 정보 모달창 (뒤로가기 구현용 슬라이드 오버레이) */
+/* ==========================================
+    상세 정보 모달창 (팝업 레이아웃)
+========================================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -218,33 +226,76 @@ header p {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
     gap: 25px;
+    align-items: start;
 }
+
+/* 모달 이미지 크기 제어 고정 구역 */
+.modal-body img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #cbb38d;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.modal-header h2 {
+    font-size: 1.8rem;
+    color: #2b1f11;
+}
+.modal-info hr {
+    border: 0; 
+    height: 1px; 
+    background: rgba(120,80,40,0.2); 
+    margin-bottom: 15px;
+}
+.info-item { 
+    margin-bottom: 15px; 
+}
+.info-item strong { 
+    display: block; 
+    color: #7c5829; 
+    margin-bottom: 5px; 
+    font-size: 0.95rem; 
+}
+.info-item p { 
+    color: #4a3b2c; 
+    line-height: 1.6; 
+    font-size: 1rem; 
+}
+
 /* ==========================================
-   📱 모바일 & 태블릿 반응형 레이아웃 최적화
+    📱 모바일 & 태블릿 반응형 레이아웃 최적화
 ========================================== */
 
-/* 1. 태블릿 이하 화면 (브라우저 창을 줄였을 때) */
+/* 1. 태블릿 이하 화면 */
 @media (max-width: 1024px) {
     header h1 {
-        font-size: 3.2rem; /* 헤더 크기 살짝 축소 */
+        font-size: 3.2rem;
         letter-spacing: 8px;
     }
     .registry {
-        padding: 30px 20px; /* 양피지 내부 여백 줄여서 카드 공간 확보 */
+        padding: 30px 20px;
     }
     .character-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 화면에 맞춰 카드 자동 배치 */
-        gap: 15px; /* 카드 사이 간격 좁히기 */
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 15px;
     }
 }
 
-/* 2. 스마트폰 화면 (세로 모드 일반 휴대폰) */
+/* 2. 스마트폰 화면 */
 @media (max-width: 600px) {
     header {
-        padding: 40px 10px 20px; /* 헤더 여백 축소 */
+        padding: 40px 10px 20px;
     }
     header h1 {
-        font-size: 2.2rem; /* 폰트 크기 모바일에 맞춤 */
+        font-size: 2.2rem;
         letter-spacing: 4px;
     }
     header p {
@@ -253,19 +304,18 @@ header p {
     }
 
     .registry {
-        padding: 20px 12px; /* 휴대폰 양옆 여백을 최소화해서 꽉 차게 변경 */
-        border-radius: 8px; /* 모바일에서는 테두리를 살짝 부드럽게만 */
+        padding: 20px 12px;
+        border-radius: 8px;
     }
     .registry-info h2 {
         font-size: 1.4rem;
     }
 
-    /* 검색창과 필터 버튼 정렬 */
     .search-box {
         margin-bottom: 20px;
     }
     .search-box input {
-        padding: 10px 18px; /* 터치하기 편하되 너무 뚱뚱하지 않게 */
+        padding: 10px 18px;
         font-size: 0.95rem;
     }
 
@@ -274,39 +324,41 @@ header p {
         margin-bottom: 25px;
     }
     .btn {
-        padding: 6px 12px; /* 버튼 크기를 줄여서 모바일에서 덜 깨지게 함 */
+        padding: 6px 12px;
         font-size: 0.85rem;
     }
 
-    /* 📌 핵심: 모바일에서 무조건 한 줄에 카드 2개씩 이쁘게 나오도록 고정 */
     .character-grid {
         grid-template-columns: repeat(2, 1fr) !important; 
         gap: 12px;
     }
     .card-info {
-        padding: 10px; /* 카드 내부 여백 줄임 */
+        padding: 10px;
     }
     .card-info h3 {
-        font-size: 0.95rem; /* 캐릭터 이름 크기 최적화 */
+        font-size: 0.95rem;
     }
     .rank {
-        font-size: 0.75rem; /* 랭크 글씨 크기 최적화 */
+        font-size: 0.75rem;
         padding: 2px 8px;
     }
 
-    /* 모바일 상세 팝업(모달) 창 최적화 */
     .modal-content {
         padding: 20px;
-        width: 95%; /* 화면에 거의 꽉 차게 */
+        width: 95%;
     }
     .modal-body {
-        grid-template-columns: 1fr; /* 이미지와 텍스트를 위아래로 배치 */
+        grid-template-columns: 1fr;
         gap: 15px;
-        max-height: 70vh; /* 세로가 너무 길어지면 스크롤 생기도록 */
+        max-height: 65vh;
         overflow-y: auto;
     }
+    
+    .modal-body img {
+        max-height: 280px; /* 모바일 전용 이미지 최대 높이 조절 */
+    }
+    
     .modal-header h2 {
         font-size: 1.3rem;
     }
 }
-   
