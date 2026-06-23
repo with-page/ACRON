@@ -17,12 +17,44 @@
         }
 
         body {
-            /* 배경을 매우 어둡고 깊이감 있는 우주/심해 톤으로 세팅하여 중심의 양피지가 밝게 돋보이도록 유도 */
-            background: radial-gradient(circle at top, #141f36 0%, #050a14 70%);
+            /* 📌 [신규 효과 1] 고대 대도서관 고화질 무료 이미지를 어둡고 신비로운 암흑톤 오버레이와 블렌딩 */
+            background: linear-gradient(rgba(10, 18, 31, 0.88), rgba(4, 8, 15, 0.95)), 
+                        url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1600');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             min-height: 100vh;
             font-family: 'Noto Serif KR', serif;
             color: #3a2c1c;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 🌌 [신규 효과 2] 고대 마법 대도서관 내부의 부유하는 미세 마나 불꽃/입자 효과 연출 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 40px 70px, #fff5d1, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 80px 120px, #e3c48f, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 110px 210px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 150px 90px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 190px 180px, #ffdca3, rgba(0,0,0,0));
+            background-size: 250px 250px;
+            opacity: 0.35;
+            animation: twinklingStars 12s infinite linear;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinklingStars {
+            0% { opacity: 0.3; transform: translateY(0); }
+            50% { opacity: 0.5; }
+            100% { opacity: 0.3; transform: translateY(-30px); }
         }
 
         /* ==========================================
@@ -31,13 +63,15 @@
         header {
             text-align: center;
             padding: 50px 20px 25px;
+            position: relative;
+            z-index: 1;
         }
         header h1 {
             font-family: 'Cinzel', serif;
             color: #e8d9b7;
             font-size: 3.5rem;
             letter-spacing: 10px;
-            text-shadow: 0 0 15px rgba(232, 217, 183, 0.4);
+            text-shadow: 0 0 20px rgba(232, 217, 183, 0.4);
         }
         header p {
             font-family: 'Cinzel', serif;
@@ -47,7 +81,7 @@
             font-size: 1rem;
         }
 
-        /* 🔗 공식 홈페이지 바로가기 앤틱 버튼 스타일 (요청된 도메인 연동) */
+        /* 공식 홈페이지 바로가기 앤틱 버튼 스타일 */
         .visit-official-btn {
             display: inline-block;
             margin-top: 18px;
@@ -58,15 +92,16 @@
             text-decoration: none;
             border: 1px solid rgba(185, 168, 137, 0.4);
             border-radius: 20px;
-            background: rgba(20, 31, 54, 0.4);
+            background: rgba(20, 31, 54, 0.6);
+            backdrop-filter: blur(5px);
             letter-spacing: 2px;
             transition: all 0.3s ease;
         }
         .visit-official-btn:hover {
             color: #e8d9b7;
             border-color: #e8d9b7;
-            background: rgba(185, 168, 137, 0.12);
-            box-shadow: 0 0 12px rgba(232, 217, 183, 0.25);
+            background: rgba(185, 168, 137, 0.15);
+            box-shadow: 0 0 15px rgba(232, 217, 183, 0.3);
             transform: translateY(-2px);
         }
 
@@ -76,7 +111,7 @@
             width: min(1400px, 95%);
             margin: 0 auto 60px;
             
-            /* 진짜 화사하고 따뜻한 고화질 황금빛 양피지 텍스처 입히기 */
+            /* 고화질 황금빛 양피지 텍스처 */
             background: url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?q=80&w=1200');
             background-size: cover;       
             background-position: center;  
@@ -84,8 +119,6 @@
             
             /* 불규칙하게 오려낸 듯 파동치는 곡선 모서리 처리 */
             border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
-            
-            /* 손그림 느낌이 나는 거칠고 은은한 양피지 실 테두리 */
             border: 1px solid rgba(139, 115, 85, 0.5);
             padding: 60px 50px;
             
@@ -93,6 +126,7 @@
             box-shadow: 
                 inset 0 0 80px rgba(92, 67, 40, 0.4), 
                 0 30px 80px rgba(0, 0, 0, 0.8);
+            z-index: 1;
         }
 
         /* 양피지 안쪽을 따라 흐르는 수작업 가이드 선 프레임 */
@@ -104,7 +138,6 @@
             right: 18px;
             bottom: 18px;
             border: 1px dashed rgba(124, 88, 41, 0.35);
-            /* 보조선 프레임도 메인 껍데기 곡률에 맞춰 유기적으로 처리 */
             border-radius: 240px 20px 210px 25px / 20px 210px 25px 240px;
             pointer-events: none;
             z-index: 1;
@@ -124,6 +157,30 @@
         .corner-bl { bottom: 28px; left: 28px; border-right: none; border-top: none; }
         .corner-br { bottom: 28px; right: 28px; border-left: none; border-top: none; }
 
+        /* ⚜️ [신규 효과 3] 고풍스러운 중세풍 헤더 구분 장식 */
+        .ornamental-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px auto 5px;
+            opacity: 0.65;
+            pointer-events: none;
+        }
+        .ornamental-line::before, .ornamental-line::after {
+            content: "";
+            height: 1px;
+            width: 80px;
+            background: linear-gradient(to var(--direction, right), rgba(124, 88, 41, 0), rgba(124, 88, 41, 0.8));
+        }
+        .ornamental-line::before { --direction: left; }
+        .ornamental-line::after { --direction: right; }
+        .ornamental-diamond {
+            font-size: 0.85rem;
+            color: #7c5829;
+            text-shadow: 0 0 3px rgba(124, 88, 41, 0.3);
+        }
+
         .registry-info {
             text-align: center;
             margin-bottom: 35px;
@@ -139,7 +196,6 @@
             letter-spacing: 2px;
         }
         
-        /* 가이드/센티넬 요약 텍스트 양식 */
         .breakdown-text {
             font-size: 0.95rem;
             color: #7c5829;
@@ -222,19 +278,17 @@
         .character-grid {
             display: flex;
             flex-direction: column;
-            gap: 45px;                 /* 등급 구역별 여백 확보 */
+            gap: 45px;
             position: relative;
             z-index: 3;
         }
 
-        /* 개별 등급 구역 양식 */
         .rank-section {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
-        /* 고풍스러운 등급 가로 헤더선 소제목 */
         .rank-section-title {
             font-family: 'Cinzel', serif;
             font-size: 1.15rem;
@@ -246,33 +300,47 @@
             align-items: center;
             gap: 10px;
         }
-        /* SS 등 특정 핵심 랭크 색상 세련되게 차별화 */
         .rank-section-title[data-rank="SS"] {
             color: #aa8628;
             border-bottom-color: rgba(212, 175, 55, 0.4);
         }
 
-        /* 실제 카드가 배열될 등급별 그리드 하위 판넬 */
         .rank-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 25px;
         }
 
+        /* 🃏 [신규 효과 4] 카드 호버 시 황금빛 시어(Sweep) 애니메이션 추가 */
         .card {
             background: #fffdf9;
             border: 1px solid #cbb38d;
             border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
             box-shadow: 0 6px 15px rgba(92, 67, 40, 0.1);
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,253,245,0.4) 50%, rgba(255,253,247,0) 100%);
+            transform: skewX(-25deg);
+            transition: none;
+            pointer-events: none;
         }
         .card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 35px rgba(92, 67, 40, 0.25);
             border-color: #7c5829;
         }
+        .card:hover::after {
+            left: 150%;
+            transition: all 0.8s ease-in-out;
+        }
+        
         .card img {
             width: 100%;
             aspect-ratio: 3/4;
@@ -285,14 +353,12 @@
             text-align: center;
         }
         
-        /* 카드 이름 배치 구역 (세로 정렬) */
         .card-name-group {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 10px;
         }
-        /* 영어 대표 이름 (Cinzel 판타지풍 서체로 화사하고 굵게) */
         .card-name-group h3 {
             font-family: 'Cinzel', serif;
             font-size: 1.25rem;
@@ -301,7 +367,6 @@
             letter-spacing: 1px;
             text-transform: uppercase;
         }
-        /* 한국어 풀네임/서브 네임 (작고 부드러운 갈색 톤 세리프) */
         .card-name-group .sub-name {
             font-family: 'Noto Serif KR', serif;
             font-size: 0.82rem;
@@ -349,7 +414,6 @@
             pointer-events: auto;
         }
 
-        /* 📜 모달창 상자 */
         .modal-content {
             background: url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?q=80&w=1200');
             background-size: cover;
@@ -367,12 +431,11 @@
             transform: translateY(30px);
             transition: transform 0.3s ease;
 
-            /* [UX 개선] 모달창 자체가 화면보다 커서 묻히지 않도록 최대 높이 고정 및 내부 스크롤 허용 */
             max-height: 90vh;
             overflow-y: auto;
         }
 
-        /* 모달창 자체 양피지풍 커스텀 스크롤바 디자인 */
+        /* 모달창 스크롤바 디자인 */
         .modal-content::-webkit-scrollbar {
             width: 6px;
         }
@@ -388,7 +451,6 @@
             background: rgba(124, 88, 41, 0.5);
         }
 
-        /* 모달 내부 보조 가이드 데코레이션 프레임 선 */
         .modal-content::before {
             content: '';
             position: absolute;
@@ -417,7 +479,7 @@
             font-weight: bold;
             margin-bottom: 20px;
             position: relative;
-            z-index: 10; /* 스크롤 시 버튼 레이어 순위 보정 */
+            z-index: 10;
             transition: all 0.2s;
         }
         .close-btn:hover { 
@@ -444,7 +506,6 @@
             background: #eae0c9;
         }
 
-        /* 모달창 내부 요원 이름 배치 (세로 정렬) */
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -459,7 +520,7 @@
         }
         .modal-header h2 {
             font-family: 'Cinzel', serif;
-            font-size: 2rem; /* 모달의 영어 대표 이름은 크게 */
+            font-size: 2rem;
             color: #2b1f11;
             font-weight: 700;
             letter-spacing: 1px;
@@ -467,7 +528,7 @@
         }
         .modal-header .modal-sub-name {
             font-family: 'Noto Serif KR', serif;
-            font-size: 0.95rem; /* 한글 서브명은 작고 부드럽게 */
+            font-size: 0.95rem;
             color: #7c5829;
             font-weight: 500;
         }
@@ -495,7 +556,6 @@
             color: #3d3021;
         }
 
-        /* 보유 능력 등 개별 정보 아이템 타이틀 라벨 */
         .info-item { 
             margin-bottom: 18px; 
         }
@@ -528,7 +588,6 @@
             line-height: 1.7;
         }
 
-        /* 마크다운 파서 스타일링 */
         #modal-desc strong {
             background: transparent;
             color: #943a26;
@@ -568,8 +627,7 @@
             .search-box { margin-bottom: 20px; }
             .search-box input { padding: 10px 18px; font-size: 0.95rem; }
             
-            /* 📌 [레이아웃 대폭 개량] 모바일에서 카테고리와 랭킹 버튼들이 흉하게 꺾이던 문제 해결 */
-            /* 좌우 스와이프 가능한 슬라이더 형태로 감각적 디자인 */
+            /* 📌 [중요 수정] 모바일 화면에서 필터 카테고리를 가로 슬라이더(Swipe) 구조로 변경 */
             .filter-wrapper { 
                 gap: 10px; 
                 margin-bottom: 25px; 
@@ -581,17 +639,16 @@
                 flex-wrap: nowrap;          /* 절대 아래로 꺾이지 않음 */
                 overflow-x: auto;          /* 가로 스크롤 허용 */
                 width: 100%;
-                justify-content: flex-start; /* 왼쪽부터 차곡차곡 배치 */
+                justify-content: flex-start; /* 왼쪽부터 배치 */
                 padding: 4px 10px;
                 gap: 6px;
                 
-                /* 스크롤바 숨기기 (IE, Edge, Firefox) */
-                -ms-overflow-style: none;
-                scrollbar-width: none;
+                /* 스크롤바 완전히 숨겨서 깨끗한 분위기 유지 */
+                -ms-overflow-style: none;  /* IE */
+                scrollbar-width: none;     /* Firefox */
             }
-            /* 스크롤바 숨기기 (Chrome, Safari) */
             .filter-group::-webkit-scrollbar {
-                display: none;
+                display: none;             /* Chrome, Safari, Opera */
             }
             .btn { 
                 flex-shrink: 0;            /* 가로 스크롤 시 버튼 찌그러짐 방지 */
@@ -607,7 +664,6 @@
             /* 4열 정렬을 강제하기 위해 4fr 비율 적용 및 조밀한 카드 간격(gap) 세팅 */
             .rank-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 6px !important; }
             
-            /* 좁아진 모바일 너비(4열) 내에서 텍스트가 넘치거나 카드 높이가 비정상적으로 길어지지 않도록 패딩 및 폰트 축소 */
             .card { border-radius: 6px; }
             .card-info { padding: 6px 4px; }
             
@@ -635,15 +691,14 @@
                 padding: 1px 4px; 
                 border-radius: 4px;
                 letter-spacing: 0px;
-                transform: scale(0.9); /* 작은 화면에서 디테일 확보 */
+                transform: scale(0.9);
             }
 
-            /* [UX 개선] 모바일 기기 높이에 맞춰 모달창 카드 높이를 최대 90%로 조절 및 카드 자체 스크롤 활성화 */
             .modal-content { 
                 padding: 25px 20px 20px; 
                 width: 95%; 
-                max-height: 90vh; /* 화면 아래로 탈출 방지 */
-                overflow-y: auto; /* 카드 자체 내부 스크롤 허용 */
+                max-height: 90vh;
+                overflow-y: auto;
                 border-radius: 80px 12px 70px 10px / 10px 70px 12px 80px; 
             }
             .modal-content::before { border-radius: 75px 10px 65px 8px / 8px 65px 10px 75px; top: 8px; left: 8px; right: 8px; bottom: 8px; }
@@ -676,7 +731,6 @@
 <header>
     <h1>ARCRON</h1>
     <p>Character Registry</p>
-    <!-- 📌 공식 홈페이지 링크 주소 완벽 연동 -->
     <a href="https://mangosrd.github.io/mmok/" class="visit-official-btn" target="_blank">Visit Official Site</a>
 </header>
 
@@ -689,10 +743,13 @@
 
     <div class="registry-info">
         <h2>Personnel Archive</h2>
-        <!-- '등록된 요원 수'에서 판타지 세계관에 어울리는 '등재된 서약자 수'로 변경 -->
         <p>등재된 서약자 수 : <span id="total-count">0</span></p>
-        <!-- Sentinel / Guide 실시간 인원 요약 (영문명 유지) -->
         <p class="breakdown-text">Sentinel: <span id="sentinel-count">0</span>명 | Guide: <span id="guide-count">0</span>명</p>
+        
+        <!-- ⚜️ 고풍스러운 양식 구분 데코 선 -->
+        <div class="ornamental-line">
+            <span class="ornamental-diamond">♦ ⚜ ♦</span>
+        </div>
     </div>
 
     <!-- 검색창 -->
@@ -700,7 +757,7 @@
         <input type="text" id="search-input" placeholder="요원 이름을 입력하세요...">
     </div>
 
-    <!-- 필터 그룹 (전체는 한국어, Sentinel/Guide는 고유 영문명 유지) -->
+    <!-- 필터 그룹 -->
     <div class="filter-wrapper">
         <div class="filter-group" id="type-filters">
             <button class="btn active" data-filter="all">전체</button>
@@ -731,11 +788,9 @@
         <div class="modal-body">
             <img id="modal-img" src="" alt="캐릭터 이미지">
             <div class="modal-info">
-                <!-- 모달창 헤더 (대문자 영문명 크게 + 풀네임 작게 배치) -->
                 <div class="modal-header">
                     <div class="modal-name-group">
                         <h2 id="modal-name">Name</h2>
-                        <!-- 버그 수정: 중복되던 rank 배지 태그를 올바른 id="modal-sub-name" 태그로 원상 복구 -->
                         <span id="modal-sub-name" class="modal-sub-name">-</span>
                     </div>
                     <span id="modal-badge" class="rank">Rank</span>
@@ -775,6 +830,47 @@
     const modal = document.getElementById('detail-modal');
     const closeModalBtn = document.getElementById('close-modal');
 
+    // 🔮 [신규 효과 4] 데이터 부재 시 출력할 고풍스러운 SVG 별자리 마법진 자리표시 이미지 생성기
+    function getRunicPlaceholder(name) {
+        const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="100%" height="100%">
+                <rect width="100%" height="100%" fill="#ebdcb9"/>
+                <!-- 고풍스러운 타오르는 그을림 음영 -->
+                <radialGradient id="burn" cx="50%" cy="50%" r="70%">
+                    <stop offset="40%" stop-color="#ebdcb9" stop-opacity="0"/>
+                    <stop offset="100%" stop-color="#80562d" stop-opacity="0.25"/>
+                </radialGradient>
+                <rect width="100%" height="100%" fill="url(#burn)"/>
+                
+                <!-- 내부 가이드 더블 원형 프레임 -->
+                <circle cx="150" cy="180" r="85" fill="none" stroke="#aa7a44" stroke-width="1" stroke-dasharray="3,3"/>
+                <circle cx="150" cy="180" r="75" fill="none" stroke="#aa7a44" stroke-width="1.5"/>
+                <circle cx="150" cy="180" r="70" fill="none" stroke="#aa7a44" stroke-width="0.5"/>
+                
+                <!-- 마법진 별자리 기하학 문양 -->
+                <polygon points="150,95 220,215 80,215" fill="none" stroke="#aa7a44" stroke-width="1" opacity="0.65"/>
+                <polygon points="150,265 220,145 80,145" fill="none" stroke="#aa7a44" stroke-width="1" opacity="0.65"/>
+                
+                <!-- 동서남북 가이드 장식 문양 -->
+                <line x1="150" y1="90" x2="150" y2="270" stroke="#8c5828" stroke-width="0.5" opacity="0.5"/>
+                <line x1="60" y1="180" x2="240" y2="180" stroke="#8c5828" stroke-width="0.5" opacity="0.5"/>
+                
+                <!-- 상단 장식 별 문양 -->
+                <path d="M150,55 L152,67 L163,65 L154,71 L158,82 L150,75 L142,82 L146,71 L137,65 L148,67 Z" fill="#aa7a44" opacity="0.8"/>
+                
+                <!-- 하단 기하학 명칭 명판 상자 -->
+                <rect x="50" y="315" width="200" height="40" fill="none" stroke="#aa7a44" stroke-width="1" rx="5"/>
+                <rect x="53" y="318" width="194" height="34" fill="none" stroke="#aa7a44" stroke-width="0.5" stroke-dasharray="2,2" rx="3"/>
+                
+                <!-- 서약자 대표 영문 폰트 렌더링 -->
+                <text x="150" y="341" font-family="'Cinzel', serif" font-size="16" font-weight="bold" fill="#5c3f20" text-anchor="middle" letter-spacing="2">
+                    ${name.toUpperCase()}
+                </text>
+            </svg>
+        `;
+        return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+    }
+
     // [동적 데이터 로드] 외부 data.json 파일 가져오기
     async function loadCharacters() {
         try {
@@ -806,7 +902,7 @@
             const matchesType = (currentType === 'all' || char.type === currentType);
             const matchesRank = (currentRank === 'all' || char.rank === currentRank);
             
-            // [검색 기능 확장] 대표 영문명("name")과 한국어 풀네임("subName") 모두 검색 대상에 반영
+            // 대표 영문명("name")과 한국어 풀네임("subName") 모두 검색 대상에 반영
             const nameLower = char.name.toLowerCase();
             const subNameLower = (char.subName || '').toLowerCase();
             const searchLower = searchQuery.toLowerCase();
@@ -823,13 +919,13 @@
         document.getElementById('sentinel-count').textContent = sentinelCount;
         document.getElementById('guide-count').textContent = guideCount;
 
-        // 📌 [요구사항 수정] 검색 결과가 없을 때 노출할 영웅록 매칭 메시지 변경
+        // 📌 [요청사항 수정] 검색 결과가 없을 때 노출할 영웅록 매칭 메시지 변경
         if (filtered.length === 0) {
             grid.innerHTML = `<p style="text-align:center; color:#7c5829; padding: 40px 0; font-weight: bold; width:100%;">검색결과와 일치하는 서약자가 없습니다.</p>`;
             return;
         }
 
-        // [신규 로직] 등급별로 요원들을 분할(그룹화)
+        // 등급별로 요원들을 분할(그룹화)
         const charactersByRank = {};
         rankOrder.forEach(r => {
             charactersByRank[r] = [];
@@ -839,7 +935,6 @@
             if (charactersByRank[char.rank]) {
                 charactersByRank[char.rank].push(char);
             } else {
-                // 등급이 안전 규격 배열에 존재하지 않는 경우를 대비한 방어 코드
                 charactersByRank[char.rank] = [char];
             }
         });
@@ -865,8 +960,9 @@
                 rankList.forEach(char => {
                     const card = document.createElement('div');
                     card.className = 'card';
+                    // 📌 [신규 효과 4] onerror 시 엑스박스 대신 고풍스러운 전용 SVG 마법진 렌더링 연동
                     card.innerHTML = `
-                        <img src="${char.image}" alt="${char.name}" onerror="this.onerror=null; this.src='https://placehold.co/300x400/eae0c9/3a2c1c?text=${char.name}';">
+                        <img src="${char.image}" alt="${char.name}" onerror="this.onerror=null; this.src='${getRunicPlaceholder(char.name)}';">
                         <div class="card-info">
                             <!-- 대표 영문이름과 한국어 서브네임 출력 -->
                             <div class="card-name-group">
@@ -907,7 +1003,7 @@
         modalImg.src = char.image;
         modalImg.onerror = function() {
             this.onerror = null;
-            this.src = 'https://placehold.co/300x400/eae0c9/3a2c1c?text=' + char.name;
+            this.src = getRunicPlaceholder(char.name);
         };
 
         // 모달창 내부 텍스트 꽂아주기
@@ -931,7 +1027,7 @@
         modal.classList.remove('active');
     });
 
-    // 📌 [UX 개선] 어두운 배경(Overlay) 클릭/터치 시 직관적으로 즉시 닫기 실행
+    // 어두운 배경(Overlay) 클릭/터치 시 직관적으로 즉시 닫기 실행
     modal.addEventListener('click', (e) => {
         if (e.target === modal) modal.classList.remove('active');
     });
