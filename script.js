@@ -62,7 +62,33 @@ function renderCharacters() {
     });
 }
 
-// 3. 모달창 제어 (나이, 작위 데이터 매핑 및 // 줄바꿈 변환)
+// 📌 미니 마크다운 파서 함수
+function parseMarkdown(text) {
+    if (!text) return '';
+    
+    let html = text;
+    
+    // 1) 기존 줄바꿈 기호 '//' 처리 추가 유지 (원할 때 사용 가능)
+    html = html.split('//').join('<br>');
+    
+    // 2) 굵게 (**텍스트** 또는 __텍스트__)
+    html = html.replace(/\*\*([\s\S]*?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/__([\s\S]*?)__/g, '<strong>$1</strong>');
+    
+    // 3) 기울임 (*텍스트* 또는 _텍스트_)
+    html = html.replace(/\*([\s\S]*?)\*/g, '<em>$1</em>');
+    html = html.replace(/_([\s\S]*?)_/g, '<em>$1</em>');
+    
+    // 4) 취소선 (~~텍스트~~)
+    html = html.replace(/~~([\s\S]*?)~~/g, '<del>$1</del>');
+    
+    // 5) 밑줄 (___텍스트___ 또는 고유 기호 <u>텍스트</u> 직접 지원용)
+    html = html.replace(/___([\s\S]*?)___/g, '<u>$1</u>');
+    
+    return html;
+}
+
+// 3. 모달창 제어 (마크다운 렌더링 연동)
 function openModal(char) {
     document.getElementById('modal-img').src = char.image;
     document.getElementById('modal-name').textContent = char.name;
@@ -71,15 +97,13 @@ function openModal(char) {
     badge.textContent = `${char.rank} · ${char.type}`;
     badge.setAttribute('data-rank', char.rank);
     
-    // 📌 [나이 및 작위 데이터 연동 구역]
     document.getElementById('modal-age').textContent = char.age ? char.age : '-';
     document.getElementById('modal-title').textContent = char.title ? char.title : '-';
     
     document.getElementById('modal-ability').textContent = char.ability;
     
-    // // 를 <br>로 치환하여 화면에 줄바꿈 형태로 출력
-    const formattedDesc = char.description.split('//').join('<br>');
-    document.getElementById('modal-desc').innerHTML = formattedDesc;
+    // 📌 마크다운을 분석하여 적용
+    document.getElementById('modal-desc').innerHTML = parseMarkdown(char.description);
     
     modal.classList.add('active');
 }
