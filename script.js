@@ -35,7 +35,7 @@ function renderCharacters() {
         return matchesType && matchesRank && matchesSearch;
     });
 
-    // 📌 상위 등급(SS) 요원부터 우선 정렬
+    // 상위 등급(SS) 요원부터 우선 정렬
     filtered.sort((a, b) => {
         return rankOrder.indexOf(a.rank) - rankOrder.indexOf(b.rank);
     });
@@ -62,7 +62,7 @@ function renderCharacters() {
     });
 }
 
-// 3. 모달창 제어 (// 문자를 <br> 줄바꿈 태그로 변환)
+// 3. 모달창 제어 (나이, 작위 데이터 매핑 및 // 줄바꿈 변환)
 function openModal(char) {
     document.getElementById('modal-img').src = char.image;
     document.getElementById('modal-name').textContent = char.name;
@@ -71,9 +71,13 @@ function openModal(char) {
     badge.textContent = `${char.rank} · ${char.type}`;
     badge.setAttribute('data-rank', char.rank);
     
+    // 📌 [나이 및 작위 데이터 연동 구역]
+    document.getElementById('modal-age').textContent = char.age ? char.age : '-';
+    document.getElementById('modal-title').textContent = char.title ? char.title : '-';
+    
     document.getElementById('modal-ability').textContent = char.ability;
     
-    // 📌 // 를 <br>로 치환하여 화면에 줄바꿈 형태로 출력
+    // // 를 <br>로 치환하여 화면에 줄바꿈 형태로 출력
     const formattedDesc = char.description.split('//').join('<br>');
     document.getElementById('modal-desc').innerHTML = formattedDesc;
     
@@ -88,7 +92,7 @@ modal.addEventListener('click', (e) => {
     if(e.target === modal) modal.classList.remove('active');
 });
 
-// 4. 이벤트 연동 (검색 및 버튼 필터링)
+// 4. 이벤트 연동
 searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value;
     renderCharacters();
