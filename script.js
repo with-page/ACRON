@@ -3,7 +3,6 @@ let currentType = 'all';
 let currentRank = 'all';
 let searchQuery = '';
 
-// DOM 요소 가져오기
 const grid = document.getElementById('character-grid');
 const totalCount = document.getElementById('total-count');
 const searchInput = document.getElementById('search-input');
@@ -21,16 +20,24 @@ async function loadCharacters() {
     }
 }
 
-// 2. 화면에 카드 렌더링하기
+// 2. 화면에 카드 렌더링하기 (등급 높은 순 정렬 포함)
 function renderCharacters() {
     grid.innerHTML = '';
     
-    // 필터 및 검색어 필터링
-    const filtered = characters.filter(char => {
+    // [등급 정렬 기준]: 상단부터 배치될 순서 고정
+    const rankOrder = ['SS', 'S', 'A', 'B', 'C', 'D', 'E', 'F'];
+    
+    // 필터 및 검색 조건 매칭
+    let filtered = characters.filter(char => {
         const matchesType = (currentType === 'all' || char.type === currentType);
         const matchesRank = (currentRank === 'all' || char.rank === currentRank);
         const matchesSearch = char.name.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesType && matchesRank && matchesSearch;
+    });
+
+    // 📌 상위 등급(SS) 요원부터 우선 정렬
+    filtered.sort((a, b) => {
+        return rankOrder.indexOf(a.rank) - rankOrder.indexOf(b.rank);
     });
 
     totalCount.textContent = filtered.length;
@@ -50,13 +57,12 @@ function renderCharacters() {
                 <span class="rank" data-rank="${char.rank}">${char.rank} · ${char.type}</span>
             </div>
         `;
-        // 카드 클릭 이벤트 추가 (상세 모달 켜기)
         card.addEventListener('click', () => openModal(char));
         grid.appendChild(card);
     });
 }
 
-// 3. 모달창 열기 / 닫기
+// 3. 모달창 제어 (// 문자를 <br> 줄바꿈 태그로 변환)
 function openModal(char) {
     document.getElementById('modal-img').src = char.image;
     document.getElementById('modal-name').textContent = char.name;
@@ -66,7 +72,10 @@ function openModal(char) {
     badge.setAttribute('data-rank', char.rank);
     
     document.getElementById('modal-ability').textContent = char.ability;
-    document.getElementById('modal-desc').textContent = char.description;
+    
+    // 📌 // 를 <br>로 치환하여 화면에 줄바꿈 형태로 출력
+    const formattedDesc = char.description.split('//').join('<br>');
+    document.getElementById('modal-desc').innerHTML = formattedDesc;
     
     modal.classList.add('active');
 }
@@ -75,18 +84,16 @@ closeModalBtn.addEventListener('click', () => {
     modal.classList.remove('active');
 });
 
-// 모달 바깥 어두운 배경 눌러도 뒤로가지게 설정
 modal.addEventListener('click', (e) => {
     if(e.target === modal) modal.classList.remove('active');
 });
 
-// 4. 이벤트 리스너 세팅 (검색 & 필터)
+// 4. 이벤트 연동 (검색 및 버튼 필터링)
 searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value;
     renderCharacters();
 });
 
-// 타입 필터 (전체 / 센티넬 / 가이드)
 document.getElementById('type-filters').addEventListener('click', (e) => {
     if(!e.target.classList.contains('btn')) return;
     document.querySelectorAll('#type-filters .btn').forEach(b => b.classList.remove('active'));
@@ -95,7 +102,6 @@ document.getElementById('type-filters').addEventListener('click', (e) => {
     renderCharacters();
 });
 
-// 랭크 필터 (ALL / SS ~ F)
 document.getElementById('rank-filters').addEventListener('click', (e) => {
     if(!e.target.classList.contains('btn')) return;
     document.querySelectorAll('#rank-filters .btn').forEach(b => b.classList.remove('active'));
@@ -104,5 +110,4 @@ document.getElementById('rank-filters').addEventListener('click', (e) => {
     renderCharacters();
 });
 
-// 실행
 loadCharacters();
