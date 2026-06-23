@@ -16,7 +16,7 @@ body {
 }
 
 /* ==========================================
-    헤더 디자인 (웅장한 판타지풍)
+    header & registry (메인 메인 레이아웃)
 ========================================== */
 header {
     text-align: center;
@@ -37,9 +37,6 @@ header p {
     font-size: 1.1rem;
 }
 
-/* ==========================================
-    메인 양피지 보드
-========================================== */
 .registry {
     width: min(1400px, 95%);
     margin: 0 auto 60px;
@@ -123,7 +120,7 @@ header p {
 }
 
 /* ==========================================
-    캐릭터 카드 그리드 & 개별 디자인
+    캐릭터 카드 그리드
 ========================================== */
 .character-grid {
     display: grid;
@@ -161,9 +158,7 @@ header p {
     margin-bottom: 8px;
 }
 
-/* ==========================================
-    🎨 등급별 고유 색상 마킹 (SS ~ F 완비)
-========================================== */
+/* 등급 뱃지 색상 */
 .rank {
     display: inline-block;
     padding: 3px 12px;
@@ -181,13 +176,14 @@ header p {
 .rank[data-rank="E"] { background: #506266; color: #fff; }
 .rank[data-rank="F"] { background: #3d3d3d; color: #fff; }
 
+
 /* ==========================================
-    상세 정보 모달창 (팝업 레이아웃 및 크기 제어)
+    ✨ [업그레이드] 상세 정보 모달창 디자인 리뉴얼
 ========================================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(7, 15, 30, 0.85);
+    background: rgba(4, 8, 18, 0.9); /* 배경을 조금 더 무겁고 어둡게 하여 모달에 시선 집중 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -201,169 +197,175 @@ header p {
     pointer-events: auto;
 }
 .modal-content {
-    background: linear-gradient(180deg, #fcf7eb 0%, #ede1c5 100%);
+    background: linear-gradient(180deg, #fcf8ee 0%, #f3eacf 100%);
     border: 2px solid #b39262;
-    width: min(700px, 90%);
-    border-radius: 12px;
-    padding: 30px;
+    width: min(850px, 92%); /* PC 가로폭을 살짝 늘려 공간 확보 */
+    border-radius: 14px;
+    padding: 25px 30px 30px;
     position: relative;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    transform: translateY(20px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    transform: translateY(30px);
     transition: transform 0.3s ease;
 }
 .modal-overlay.active .modal-content {
     transform: translateY(0);
 }
+
+/* 상단 배치된 세련된 뒤로가기 버튼 */
 .close-btn {
-    background: #7c5829;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+    background: transparent;
+    color: #7c5829;
+    border: 1px solid #b39262;
+    padding: 6px 14px;
+    border-radius: 20px;
     cursor: pointer;
     font-family: inherit;
-    margin-bottom: 20px;
-    transition: background 0.2s;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    transition: all 0.2s;
 }
-.close-btn:hover { background: #5c4328; }
+.close-btn:hover { 
+    background: #7c5829; 
+    color: #fcf8ee;
+}
 
 .modal-body {
     display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 25px;
+    grid-template-columns: 1fr 1.4fr; /* 정보창 영역 비중을 더 넓게 조절 */
+    gap: 30px;
     align-items: start;
 }
 
-/* 📌 모달 내부 거대 이미지 방지용 제한 코드 */
+/* 이미지 틀 고정 */
 .modal-body img {
     width: 100%;
-    max-height: 450px;
+    max-height: 480px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 10px;
     border: 1px solid #cbb38d;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(92, 67, 40, 0.15);
 }
 
+/* 캐릭터 이름 & 등급 헤더 구역 */
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 2px dashed rgba(120, 80, 40, 0.2); /* 경계선을 점선으로 교체하여 부드럽게 */
     margin-bottom: 15px;
 }
 .modal-header h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: #2b1f11;
+    font-weight: 700;
 }
-.modal-info hr {
-    border: 0; 
-    height: 1px; 
-    background: rgba(120,80,40,0.2); 
-    margin-bottom: 15px;
+
+/* 🧩 미니 프로필 스펙 정보 상자 (나이, 작위) */
+.modal-sub-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
 }
+.modal-sub-info .info-item {
+    background: rgba(120, 80, 40, 0.05); /* 옅은 브라운 배경 박스로 묶음 */
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(120, 80, 40, 0.1);
+    margin-bottom: 0; /* 내부 마진 제거 */
+}
+
+/* 📋 개별 정보 아이템 스타일 정돈 */
 .info-item { 
-    margin-bottom: 15px; 
+    margin-bottom: 18px; 
 }
 .info-item strong { 
-    display: block; 
+    display: inline-block; 
     color: #7c5829; 
-    margin-bottom: 5px; 
-    font-size: 0.95rem; 
+    font-size: 0.85rem; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    background: rgba(124, 88, 41, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
 }
 .info-item p { 
-    color: #4a3b2c; 
+    color: #3d3021; 
     line-height: 1.6; 
-    font-size: 1rem; 
+    font-size: 1.05rem; 
+    padding-left: 4px;
+}
+
+/* 📜 상세 설명글 전용 가독성 스타일 (마크다운 출력 구역) */
+#modal-desc {
+    background: #fdfbf7; /* 긴 글 독서용 밝고 부드러운 배경색 분리 */
+    border: 1px solid rgba(179, 146, 98, 0.3);
+    border-radius: 8px;
+    padding: 18px;
+    max-height: 240px; /* PC에서도 설명이 너무 길어지면 박스 내부 스크롤로 보호 */
+    overflow-y: auto;
+    font-size: 0.95rem;
+    color: #443525;
+    line-height: 1.7;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+}
+
+/* 마크다운 파서 스타일링 조율 */
+#modal-desc strong {
+    background: transparent;
+    color: #943a26; /* 스킬/핵심 단어 강조용 다크레드 색상 분리 */
+    font-size: 1rem;
+    padding: 0;
+    margin: 10px 0 4px;
+    display: block; /* 마크다운 굵은 글씨는 제목처럼 깔끔하게 줄바꿈 분리 */
+}
+#modal-desc strong:first-child {
+    margin-top: 0;
+}
+#modal-desc em {
+    color: #6a5233;
+    font-style: italic;
+}
+#modal-desc del {
+    color: #8d99ae;
 }
 
 /* ==========================================
     📱 모바일 & 태블릿 반응형 레이아웃 최적화
 ========================================== */
-
-/* 1. 태블릿 이하 화면 */
 @media (max-width: 1024px) {
-    header h1 {
-        font-size: 3.2rem;
-        letter-spacing: 8px;
-    }
-    .registry {
-        padding: 30px 20px;
-    }
-    .character-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 15px;
-    }
+    header h1 { font-size: 3.2rem; letter-spacing: 8px; }
+    .registry { padding: 30px 20px; }
+    .character-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
 }
 
-/* 2. 스마트폰 화면 (세로 모드 2열 꽉 찬 최적화) */
 @media (max-width: 600px) {
-    header {
-        padding: 40px 10px 20px;
-    }
-    header h1 {
-        font-size: 2.2rem;
-        letter-spacing: 4px;
-    }
-    header p {
-        font-size: 0.9rem;
-        letter-spacing: 3px;
-    }
-
-    .registry {
-        padding: 20px 12px;
-        border-radius: 8px;
-    }
-    .registry-info h2 {
-        font-size: 1.4rem;
-    }
-
-    .search-box {
-        margin-bottom: 20px;
-    }
-    .search-box input {
-        padding: 10px 18px;
-        font-size: 0.95rem;
-    }
-
-    .filter-wrapper {
-        gap: 10px;
-        margin-bottom: 25px;
-    }
-    .btn {
-        padding: 6px 12px;
-        font-size: 0.85rem;
-    }
-
-    .character-grid {
-        grid-template-columns: repeat(2, 1fr) !important; 
-        gap: 12px;
-    }
-    .card-info {
-        padding: 10px;
-    }
-    .card-info h3 {
-        font-size: 0.95rem;
-    }
-    .rank {
-        font-size: 0.75rem;
-        padding: 2px 8px;
-    }
-
-    .modal-content {
-        padding: 20px;
-        width: 95%;
-    }
-    .modal-body {
-        grid-template-columns: 1fr;
-        gap: 15px;
-        max-height: 65vh;
-        overflow-y: auto;
-    }
+    header { padding: 40px 10px 20px; }
+    header h1 { font-size: 2.2rem; letter-spacing: 4px; }
+    header p { font-size: 0.9rem; letter-spacing: 3px; }
+    .registry { padding: 20px 12px; border-radius: 8px; }
+    .registry-info h2 { font-size: 1.4rem; }
+    .search-box { margin-bottom: 20px; }
+    .search-box input { padding: 10px 18px; font-size: 0.95rem; }
+    .filter-wrapper { gap: 10px; margin-bottom: 25px; }
+    .btn { padding: 6px 12px; font-size: 0.85rem; }
     
-    .modal-body img {
-        max-height: 280px; /* 모바일 전용 이미지 크기 틀 고정 */
-    }
+    .character-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; }
+    .card-info { padding: 10px; }
+    .card-info h3 { font-size: 0.95rem; }
+    .rank { font-size: 0.75rem; padding: 2px 8px; }
+
+    /* 모바일용 팝업 창 완전 정돈 */
+    .modal-content { padding: 20px; width: 95%; }
+    .modal-body { grid-template-columns: 1fr; gap: 15px; }
+    .modal-body img { max-height: 260px; }
     
-    .modal-header h2 {
-        font-size: 1.3rem;
+    #modal-desc {
+        max-height: 200px; /* 모바일 전용 텍스트박스 스크롤 고정 */
+        padding: 12px;
     }
+    .modal-header h2 { font-size: 1.4rem; }
 }
