@@ -47,6 +47,29 @@
             font-size: 1rem;
         }
 
+        /* 🔗 [신규] 공식 홈페이지 바로가기 앤틱 버튼 스타일 */
+        .visit-official-btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 7px 22px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: #b9a889;
+            text-decoration: none;
+            border: 1px solid rgba(185, 168, 137, 0.4);
+            border-radius: 20px;
+            background: rgba(20, 31, 54, 0.4);
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        .visit-official-btn:hover {
+            color: #e8d9b7;
+            border-color: #e8d9b7;
+            background: rgba(185, 168, 137, 0.12);
+            box-shadow: 0 0 12px rgba(232, 217, 183, 0.25);
+            transform: translateY(-2px);
+        }
+
         /* 📜 메인 양피지 판넬 (손으로 자른 듯 불규칙하고 고풍스러운 보드 연출) */
         .registry {
             position: relative;
@@ -230,7 +253,7 @@
             text-align: center;
         }
         
-        /* 📌 카드 이름 배치 구역 (세로 정렬) */
+        /* 카드 이름 배치 구역 (세로 정렬) */
         .card-name-group {
             display: flex;
             flex-direction: column;
@@ -368,7 +391,7 @@
             background: #eae0c9;
         }
 
-        /* 📌 모달창 내부 요원 이름 배치 (세로 정렬) */
+        /* 모달창 내부 요원 이름 배치 (세로 정렬) */
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -480,6 +503,7 @@
             header { padding: 40px 10px 20px; }
             header h1 { font-size: 2.2rem; letter-spacing: 4px; }
             header p { font-size: 0.9rem; letter-spacing: 3px; }
+            .visit-official-btn { margin-top: 12px; padding: 6px 18px; font-size: 0.75rem; }
             .registry { padding: 35px 15px; border-radius: 120px 15px 100px 12px / 12px 100px 15px 120px; }
             .registry::before { border-radius: 110px 12px 90px 10px / 10px 90px 12px 110px; top: 10px; left: 10px; right: 10px; bottom: 10px; }
             .corner-ornament { width: 18px; height: 18px; }
@@ -523,7 +547,7 @@
                 max-height: 240px;
                 padding: 14px;
             }
-            .modal-header h2 { font-size: 1.4rem; }
+            .modal-header h2 { font-size: 1.3rem; }
             .modal-header .modal-sub-name { font-size: 0.82rem; }
         }
     </style>
@@ -533,6 +557,8 @@
 <header>
     <h1>ARCRON</h1>
     <p>Character Registry</p>
+    <!-- 📌 [신규 추가] 공식 홈페이지 링크 버튼 (href="#" 부분에 연동할 도메인 주소를 입력하세요!) -->
+    <a href="#" class="visit-official-btn" target="_blank">https://mangosrd.github.io/mmok/</a>
 </header>
 
 <section class="registry">
@@ -544,12 +570,13 @@
 
     <div class="registry-info">
         <h2>Personnel Archive</h2>
-        <p>등록된 요원 수 : <span id="total-count">0</span></p>
+        <!-- [수정] '등록된 요원 수'에서 판타지 세계관에 어울리는 '등재된 서약자 수'로 변경 -->
+        <p>등재된 서약자 수 : <span id="total-count">0</span></p>
         <!-- Sentinel / Guide 실시간 인원 요약 (영문명 유지) -->
         <p class="breakdown-text">Sentinel: <span id="sentinel-count">0</span>명 | Guide: <span id="guide-count">0</span>명</p>
     </div>
 
-    <!-- 검색창 (한국어화) -->
+    <!-- 검색창 -->
     <div class="search-box">
         <input type="text" id="search-input" placeholder="요원 이름을 입력하세요...">
     </div>
@@ -585,7 +612,7 @@
         <div class="modal-body">
             <img id="modal-img" src="" alt="캐릭터 이미지">
             <div class="modal-info">
-                <!-- 📌 모달창 헤더 (대문자 영문명 크게 + 풀네임 작게 배치) -->
+                <!-- 모달창 헤더 (대문자 영문명 크게 + 풀네임 작게 배치) -->
                 <div class="modal-header">
                     <div class="modal-name-group">
                         <h2 id="modal-name">Name</h2>
@@ -628,7 +655,7 @@
     const modal = document.getElementById('detail-modal');
     const closeModalBtn = document.getElementById('close-modal');
 
-    // 📌 [동적 데이터 로드] 외부 data.json 파일 가져오기
+    // [동적 데이터 로드] 외부 data.json 파일 가져오기
     async function loadCharacters() {
         try {
             const response = await fetch('data.json');
@@ -658,7 +685,7 @@
             const matchesType = (currentType === 'all' || char.type === currentType);
             const matchesRank = (currentRank === 'all' || char.rank === currentRank);
             
-            // 📌 [검색 기능 확장] 대표 영문명("name")과 한국어 풀네임("subName") 모두 검색 대상에 반영
+            // [검색 기능 확장] 대표 영문명("name")과 한국어 풀네임("subName") 모두 검색 대상에 반영
             const nameLower = char.name.toLowerCase();
             const subNameLower = (char.subName || '').toLowerCase();
             const searchLower = searchQuery.toLowerCase();
@@ -672,12 +699,11 @@
             return rankOrder.indexOf(a.rank) - rankOrder.indexOf(b.rank);
         });
 
-        // 총 인원수 업데이트
-        totalCount.textContent = filtered.length;
+        // [통계 고정]: 검색/필터 상태와 상관없이 '전체 데이터'를 기준으로 상단 요약본 고정
+        totalCount.textContent = characters.length;
 
-        // 필터링된 센티넬, 가이드 실시간 인원 수 계산 및 동적 반영
-        const sentinelCount = filtered.filter(char => char.type === 'Sentinel').length;
-        const guideCount = filtered.filter(char => char.type === 'Guide').length;
+        const sentinelCount = characters.filter(char => char.type === 'Sentinel').length;
+        const guideCount = characters.filter(char => char.type === 'Guide').length;
         document.getElementById('sentinel-count').textContent = sentinelCount;
         document.getElementById('guide-count').textContent = guideCount;
 
@@ -692,7 +718,7 @@
             card.innerHTML = `
                 <img src="${char.image}" alt="${char.name}" onerror="this.onerror=null; this.src='https://placehold.co/300x400/eae0c9/3a2c1c?text=${char.name}';">
                 <div class="card-info">
-                    <!-- 📌 대표 영문이름과 한국어 서브네임 출력 -->
+                    <!-- 대표 영문이름과 한국어 서브네임 출력 -->
                     <div class="card-name-group">
                         <h3>${char.name}</h3>
                         <span class="sub-name">${char.subName || ''}</span>
@@ -728,7 +754,7 @@
             this.src = 'https://placehold.co/300x400/eae0c9/3a2c1c?text=' + char.name;
         };
 
-        // 📌 모달창 내부 텍스트 꽂아주기
+        // 모달창 내부 텍스트 꽂아주기
         document.getElementById('modal-name').textContent = char.name;
         document.getElementById('modal-sub-name').textContent = char.subName || '';
         
