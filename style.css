@@ -1,10 +1,241 @@
-body{
-    background:#101423;
-    color:white;
-    font-family:sans-serif;
-    text-align:center;
+/* 기본 리셋 및 폰트 적용 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h1{
-    margin-top:50px;
+body {
+    background: radial-gradient(circle at top, #1a2a4a 0%, #070f1e 70%);
+    min-height: 100vh;
+    font-family: 'Noto Serif KR', serif;
+    color: #3a2c1c;
+    overflow-x: hidden;
 }
+
+/* 헤더 - 웅장한 느낌 */
+header {
+    text-align: center;
+    padding: 60px 20px 30px;
+}
+header h1 {
+    font-family: 'Cinzel', serif;
+    color: #e8d9b7;
+    font-size: 4.5rem;
+    letter-spacing: 12px;
+    text-shadow: 0 0 20px rgba(232, 217, 183, 0.3);
+}
+header p {
+    font-family: 'Cinzel', serif;
+    color: #b9a889;
+    letter-spacing: 6px;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+/* 메인 양피지 보드 */
+.registry {
+    width: min(1400px, 95%);
+    margin: 0 auto 60px;
+    background: linear-gradient(180deg, #f5eacf 0%, #e2ceaa 100%);
+    border: 2px solid #b39262;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+}
+
+.registry-info {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px double rgba(120, 80, 40, 0.2);
+    padding-bottom: 20px;
+}
+.registry-info h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: #5c4328;
+}
+
+/* 검색창 디자인 개선 */
+.search-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.search-box input {
+    width: 100%;
+    max-width: 500px;
+    padding: 14px 25px;
+    border: 2px solid #b28c5a;
+    border-radius: 30px;
+    background: #fcf7eb;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #3a2c1c;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.3s;
+}
+.search-box input:focus {
+    outline: none;
+    border-color: #7c5829;
+    box-shadow: 0 0 10px rgba(178, 140, 90, 0.4);
+}
+
+/* 필터 버튼 스타일 */
+.filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+.btn {
+    border: 1px solid #b28c5a;
+    background: transparent;
+    color: #6a4e29;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn:hover {
+    background: rgba(178, 140, 90, 0.1);
+}
+.btn.active {
+    background: #7c5829;
+    color: #f5eacf;
+    border-color: #7c5829;
+}
+
+/* 카드 그리드 배치 안정화 */
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+/* 카드 개별 디자인 */
+.card {
+    background: #fcf7eb;
+    border: 1px solid #cbb38d;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(92, 67, 40, 0.2);
+    border-color: #7c5829;
+}
+.card img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-bottom: 1px solid #e2ceaa;
+}
+.card-info {
+    padding: 15px;
+    text-align: center;
+}
+.card-info h3 {
+    font-size: 1.1rem;
+    color: #2b1f11;
+    margin-bottom: 8px;
+}
+
+/* 등급 뱃지 공통 */
+.rank {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+/* 등급별 색상 지정 (원하는 대로 커스텀 가능) */
+.rank[data-rank="SS"] { background: #d4af37; color: #fff; }
+.rank[data-rank="S"] { background: #e26d5c; color: #fff; }
+.rank[data-rank="A"] { background: #9b5de5; color: #fff; }
+.rank[data-rank="B"] { background: #00bbf9; color: #fff; }
+.rank[data-rank="C"], .rank[data-rank="D"], .rank[data-rank="F"] { background: #8d99ae; color: #fff; }
+
+/* -------------------------------------- */
+/* 상세 정보 모달창 (뒤로가기 구현용 슬라이드 오버레이) */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(7, 15, 30, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-content {
+    background: linear-gradient(180deg, #fcf7eb 0%, #ede1c5 100%);
+    border: 2px solid #b39262;
+    width: min(700px, 90%);
+    border-radius: 12px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+.close-btn {
+    background: #7c5829;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+}
+.close-btn:hover { background: #5c4328; }
+
+.modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 25px;
+}
+@media (max-width: 600px) {
+    .modal-body { grid-template-columns: 1fr; }
+}
+.modal-body img {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #cbb38d;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.modal-info hr {
+    border: 0; height: 1px; background: rgba(120,80,40,0.2); margin-bottom: 15px;
+}
+.info-item { margin-bottom: 15px; }
+.info-item strong { display: block; color: #7c5829; margin-bottom: 5px; font-size: 0.95rem; }
+.info-item p { color: #4a3b2c; line-height: 1.5; font-size: 1rem; }
