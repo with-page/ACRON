@@ -48,15 +48,26 @@
     "description": "우에에엥."
   },
   {
-    "id": 4,
-    "name": "ARZEN",
-    "subName": "아르젠",
+    "id": 5,
+    "name": "name",
+    "subName": "-",
     "type": "Sentinel",
-    "rank": "SS",
-    "image": "images/ARZEN.jpg",
-    "age": "38",
-    "title": "대공",
-    "ability": "구원의 성역",
-    "description": "우에에엥."
-  }
+    "rank": "E",
+    "image": "images/-.jpg",
+    "age": "-",
+    "title": "-",
+    "ability": "-",
+    "description": "-"
+  },
+  {
+    "id": 6,
+    "name": "name",
+    "subName": "-",
+    "type": "Guide",
+    "rank": "E",
+    "image": "images/-.jpg",
+    "age": "-",
+    "title": "-",
+    "ability": "-"
+    }
 ]
