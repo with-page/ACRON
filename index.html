@@ -1,28 +1,74 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>등장인물 도감</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCRON Registry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>등장인물 도감</h1>
+<header>
+    <h1>ARCRON</h1>
+    <p>Character Registry</p>
+</header>
 
-<div class="character-grid">
+<section class="registry">
+    <div class="registry-info">
+        <h2>Personnel Archive</h2>
+        <p>Registered Personnel : <span id="total-count">0</span></p>
+    </div>
 
-    <div class="card">
-        <img src="https://placehold.co/300x400" alt="캐릭터">
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="요원 이름을 입력하세요...">
+    </div>
 
-        <div class="card-content">
-            <h2>엘리샤 아쿠아렐</h2>
-
-            <span class="grade ss">SS</span>
-
-            <p>아쿠아렐 백작가</p>
-
-            <p>수채화 구현</p>
+    <div class="filter-wrapper">
+        <div class="filter-group" id="type-filters">
+            <button class="btn active" data-filter="all">전체</button>
+            <button class="btn" data-filter="Sentinel">센티넬</button>
+            <button class="btn" data-filter="Guide">가이드</button>
+        </div>
+        <div class="filter-group" id="rank-filters">
+            <button class="btn active" data-rank="all">ALL RANK</button>
+            <button class="btn" data-rank="SS">SS</button>
+            <button class="btn" data-rank="S">S</button>
+            <button class="btn" data-rank="A">A</button>
+            <button class="btn" data-rank="B">B</button>
+            <button class="btn" data-rank="C">C</button>
+            <button class="btn" data-rank="D">D</button>
+            <button class="btn" data-rank="F">F</button>
         </div>
     </div>
 
+    <div class="character-grid" id="character-grid"></div>
+</section>
+
+<div class="modal-overlay" id="detail-modal">
+    <div class="modal-content">
+        <button class="close-btn" id="close-modal">← 뒤로 가기</button>
+        <div class="modal-body">
+            <img id="modal-img" src="" alt="캐릭터 이미지">
+            <div class="modal-info">
+                <div class="modal-header">
+                    <h2 id="modal-name">이름</h2>
+                    <span id="modal-badge" class="rank">등급</span>
+                </div>
+                <hr>
+                <div class="info-item">
+                    <strong>보유 능력</strong>
+                    <p id="modal-ability">능력 내용</p>
+                </div>
+                <div class="info-item">
+                    <strong>상세 설명</strong>
+                    <p id="modal-desc">상세 설명 내용</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="script.js"></script>
+</body>
+</html>
