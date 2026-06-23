@@ -178,12 +178,12 @@ header p {
 
 
 /* ==========================================
-    ✨ [업그레이드] 상세 정보 모달창 디자인 리뉴얼
+    ✨ [디자인 밸런스 조정] 모달창 가로폭 축소 및 최적화
 ========================================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(4, 8, 18, 0.9); /* 배경을 조금 더 무겁고 어둡게 하여 모달에 시선 집중 */
+    background: rgba(4, 8, 18, 0.88);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -199,9 +199,9 @@ header p {
 .modal-content {
     background: linear-gradient(180deg, #fcf8ee 0%, #f3eacf 100%);
     border: 2px solid #b39262;
-    width: min(850px, 92%); /* PC 가로폭을 살짝 늘려 공간 확보 */
+    width: min(650px, 92%); /* 📌 기존 850px -> 650px로 줄여 가로로 늘어지는 느낌을 제거 */
     border-radius: 14px;
-    padding: 25px 30px 30px;
+    padding: 25px 25px 28px;
     position: relative;
     box-shadow: 0 30px 60px rgba(0,0,0,0.6);
     transform: translateY(30px);
@@ -211,7 +211,7 @@ header p {
     transform: translateY(0);
 }
 
-/* 상단 배치된 세련된 뒤로가기 버튼 */
+/* 상단 배치된 뒤로가기 버튼 */
 .close-btn {
     background: transparent;
     color: #7c5829;
@@ -230,17 +230,18 @@ header p {
     color: #fcf8ee;
 }
 
+/* 📌 가로폭이 줄어들었으므로 좌우 배치를 1:1.1 비율로 변경 */
 .modal-body {
     display: grid;
-    grid-template-columns: 1fr 1.4fr; /* 정보창 영역 비중을 더 넓게 조절 */
-    gap: 30px;
+    grid-template-columns: 1fr 1.1fr; 
+    gap: 20px;
     align-items: start;
 }
 
-/* 이미지 틀 고정 */
+/* 이미지 크기 균형 조정 */
 .modal-body img {
     width: 100%;
-    max-height: 480px;
+    max-height: 400px; /* 📌 가로폭에 맞춰 세로 높이도 과하지 않게 축소 */
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid #cbb38d;
@@ -252,75 +253,75 @@ header p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 12px;
-    border-bottom: 2px dashed rgba(120, 80, 40, 0.2); /* 경계선을 점선으로 교체하여 부드럽게 */
-    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px dashed rgba(120, 80, 40, 0.2);
+    margin-bottom: 12px;
 }
 .modal-header h2 {
-    font-size: 2rem;
+    font-size: 1.6rem; /* 가로폭에 맞게 폰트 크기 살짝 축소 */
     color: #2b1f11;
     font-weight: 700;
 }
 
-/* 🧩 미니 프로필 스펙 정보 상자 (나이, 작위) */
+/* 미니 프로필 스펙 정보 상자 (나이, 작위) */
 .modal-sub-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 .modal-sub-info .info-item {
-    background: rgba(120, 80, 40, 0.05); /* 옅은 브라운 배경 박스로 묶음 */
-    padding: 10px 15px;
+    background: rgba(120, 80, 40, 0.05);
+    padding: 8px 12px;
     border-radius: 8px;
     border: 1px solid rgba(120, 80, 40, 0.1);
-    margin-bottom: 0; /* 내부 마진 제거 */
+    margin-bottom: 0;
 }
 
-/* 📋 개별 정보 아이템 스타일 정돈 */
+/* 개별 정보 아이템 스타일 정돈 */
 .info-item { 
-    margin-bottom: 18px; 
+    margin-bottom: 14px; 
 }
 .info-item strong { 
     display: inline-block; 
     color: #7c5829; 
-    font-size: 0.85rem; 
+    font-size: 0.8rem; 
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     background: rgba(124, 88, 41, 0.1);
-    padding: 2px 8px;
+    padding: 2px 6px;
     border-radius: 4px;
 }
 .info-item p { 
     color: #3d3021; 
-    line-height: 1.6; 
-    font-size: 1.05rem; 
+    line-height: 1.5; 
+    font-size: 0.95rem; 
     padding-left: 4px;
 }
 
-/* 📜 상세 설명글 전용 가독성 스타일 (마크다운 출력 구역) */
+/* 상세 설명글 전용 가독성 스타일 (마크다운 출력 구역) */
 #modal-desc {
-    background: #fdfbf7; /* 긴 글 독서용 밝고 부드러운 배경색 분리 */
+    background: #fdfbf7;
     border: 1px solid rgba(179, 146, 98, 0.3);
     border-radius: 8px;
-    padding: 18px;
-    max-height: 240px; /* PC에서도 설명이 너무 길어지면 박스 내부 스크롤로 보호 */
+    padding: 14px;
+    max-height: 200px; /* 📌 전체적인 콤팩트함에 맞춰 설명창 스크롤 높이 조절 */
     overflow-y: auto;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #443525;
-    line-height: 1.7;
+    line-height: 1.6;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
 }
 
 /* 마크다운 파서 스타일링 조율 */
 #modal-desc strong {
     background: transparent;
-    color: #943a26; /* 스킬/핵심 단어 강조용 다크레드 색상 분리 */
-    font-size: 1rem;
+    color: #943a26;
+    font-size: 0.95rem;
     padding: 0;
-    margin: 10px 0 4px;
-    display: block; /* 마크다운 굵은 글씨는 제목처럼 깔끔하게 줄바꿈 분리 */
+    margin: 8px 0 4px;
+    display: block;
 }
 #modal-desc strong:first-child {
     margin-top: 0;
@@ -358,14 +359,13 @@ header p {
     .card-info h3 { font-size: 0.95rem; }
     .rank { font-size: 0.75rem; padding: 2px 8px; }
 
-    /* 모바일용 팝업 창 완전 정돈 */
     .modal-content { padding: 20px; width: 95%; }
     .modal-body { grid-template-columns: 1fr; gap: 15px; }
     .modal-body img { max-height: 260px; }
     
     #modal-desc {
-        max-height: 200px; /* 모바일 전용 텍스트박스 스크롤 고정 */
+        max-height: 180px;
         padding: 12px;
     }
-    .modal-header h2 { font-size: 1.4rem; }
+    .modal-header h2 { font-size: 1.3rem; }
 }
