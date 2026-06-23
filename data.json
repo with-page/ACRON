@@ -1,1 +1,21 @@
 
+[
+  {
+    "id": 1,
+    "name": "리비안 로베르",
+    "type": "Guide",
+    "rank": "SS",
+    "image": "images/rivian.jpg",
+    "ability": "광역 정신 정화",
+    "description": "아크론 소속의 최상위 가이드."
+  },
+  {
+    "id": 2,
+    "name": "세릭",
+    "type": "Guide",
+    "rank": "SS",
+    "image": "images/rick.png",
+    "ability": "성운의 결계",
+    "description": "우에에엥."
+  }
+]
