@@ -1,2 +1,0 @@
-# ACRON
-wiki
