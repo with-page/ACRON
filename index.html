@@ -852,11 +852,12 @@
                 <polygon points="150,115 195,210 105,210" fill="none" stroke="#8b7355" stroke-width="1"/>
                 <polygon points="150,245 105,150 195,150" fill="none" stroke="#8b7355" stroke-width="1"/>
                 <path d="M 25 40 L 40 25 M 275 40 L 260 25 M 25 360 L 40 375 M 275 360 L 260 375" stroke="#7c5829" stroke-width="1"/>
-                <text x="150" y="295" font-family="'Cinzel', serif" font-size="16" font-weight="bold" fill="#3a2c1c" text-anchor="middle" letter-spacing="2">${escapedName}</text>
-                <text x="150" y="320" font-family="'Noto Serif KR', serif" font-size="10" fill="#7c5829" text-anchor="middle" letter-spacing="1">NO IMAGE</text>
+                <text x="150" y="295" font-family="Cinzel, serif" font-size="16" font-weight="bold" fill="#3a2c1c" text-anchor="middle" letter-spacing="2">${escapedName}</text>
+                <text x="150" y="320" font-family="Noto Serif KR, serif" font-size="10" fill="#7c5829" text-anchor="middle" letter-spacing="1">NO IMAGE</text>
             </svg>
         `;
-        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg.trim());
+        // 📌 [중요 해결책] encodeURIComponent 실행결과 중 HTML 싱글 쿼테이션(')을 강제로 아우터 이스케이프(%27) 처리하여 onerror 내 인라인 CSS 따옴표 충돌 및 렌더링 붕괴 버그 해결!
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg.trim()).replace(/'/g, "%27");
     }
 
     // [동적 데이터 로드] 외부 data.json 파일 가져오기
@@ -886,12 +887,18 @@
         // 정렬 우선순위 등급 매칭
         const rankOrder = ['SS', 'S', 'A', 'B', 'C', 'D', 'E', 'F'];
         
+        // 📌 [안전 가이드 연동] 데이터의 특정 필드가 비었거나 비정상적일 때를 대비한 널 세이프 필터 구현
         let filtered = characters.filter(char => {
-            const matchesType = (currentType === 'all' || char.type === currentType);
-            const matchesRank = (currentRank === 'all' || char.rank === currentRank);
+            if (!char) return false;
             
-            // [검색 기능 확장] 대표 영문명("name")과 한국어 풀네임("subName") 모두 검색 대상에 반영
-            const nameLower = char.name.toLowerCase();
+            const charName = char.name || '';
+            const charType = char.type || '';
+            const charRank = (char.rank || '').toUpperCase().trim();
+            
+            const matchesType = (currentType === 'all' || charType === currentType);
+            const matchesRank = (currentRank === 'all' || charRank === currentRank.toUpperCase().trim());
+            
+            const nameLower = charName.toLowerCase();
             const subNameLower = (char.subName || '').toLowerCase();
             const searchLower = searchQuery.toLowerCase();
             const matchesSearch = nameLower.includes(searchLower) || subNameLower.includes(searchLower);
@@ -902,8 +909,8 @@
         // [통계 고정]: 검색/필터 상태와 상관없이 '전체 데이터'를 기준으로 상단 요약본 고정
         totalCount.textContent = characters.length;
 
-        const sentinelCount = characters.filter(char => char.type === 'Sentinel').length;
-        const guideCount = characters.filter(char => char.type === 'Guide').length;
+        const sentinelCount = characters.filter(char => (char.type || '') === 'Sentinel').length;
+        const guideCount = characters.filter(char => (char.type || '') === 'Guide').length;
         document.getElementById('sentinel-count').textContent = sentinelCount;
         document.getElementById('guide-count').textContent = guideCount;
 
@@ -919,10 +926,13 @@
         });
 
         filtered.forEach(char => {
-            if (charactersByRank[char.rank]) {
-                charactersByRank[char.rank].push(char);
+            const rawRank = (char.rank || 'F').toUpperCase().trim();
+            // 📌 [안전 가이드 연동] rankOrder 규격 외의 데이터가 왔을 때 무시당하지 않고 안전하게 F Rank에 연동되도록 조율
+            const r = rankOrder.includes(rawRank) ? rawRank : 'F';
+            if (charactersByRank[r]) {
+                charactersByRank[r].push(char);
             } else {
-                charactersByRank[char.rank] = [char];
+                charactersByRank[r] = [char];
             }
         });
 
@@ -947,15 +957,16 @@
                 rankList.forEach(char => {
                     const card = document.createElement('div');
                     card.className = 'card';
+                    // 📌 [안전 장치] onerror 처리 시 getRunicPlaceholder(char.name)가 정상 작동하여 마법진이 무조건 그려지게 변경
                     card.innerHTML = `
-                        <img src="${char.image}" alt="${char.name}" onerror="this.onerror=null; this.src='${getRunicPlaceholder(char.name)}';">
+                        <img src="${char.image || ''}" alt="${char.name || 'ARCRON'}" onerror="this.onerror=null; this.src='${getRunicPlaceholder(char.name)}';">
                         <div class="card-info">
                             <!-- 대표 영문이름과 한국어 서브네임 출력 -->
                             <div class="card-name-group">
-                                <h3>${char.name}</h3>
+                                <h3>${char.name || '-'}</h3>
                                 <span class="sub-name">${char.subName || ''}</span>
                             </div>
-                            <span class="rank" data-rank="${char.rank}">${char.rank} · ${char.type}</span>
+                            <span class="rank" data-rank="${char.rank || 'F'}">${char.rank || 'F'} · ${char.type || 'Sentinel'}</span>
                         </div>
                     `;
                     card.addEventListener('click', () => openModal(char));
@@ -978,7 +989,7 @@
         html = html.replace(/__([\s\S]*?)__/g, '<strong>$1</strong>');
         html = html.replace(/\*([\s\S]*?)\*/g, '<em>$1</em>');
         html = html.replace(/_([\s\S]*?)_/g, '<em>$1</em>');
-        html = html.replace(/~~([\s\S]*?)~~/g, '<del>$1</del>');
+        html = html.replace(/~~([\s\S]*?)__/g, '<del>$1</del>');
         html = html.replace(/___([\s\S]*?)___/g, '<u>$1</u>');
         return html;
     }
@@ -986,24 +997,24 @@
     // 모달 제어
     function openModal(char) {
         const modalImg = document.getElementById('modal-img');
-        modalImg.src = char.image;
+        modalImg.src = char.image || '';
         modalImg.onerror = function() {
             this.onerror = null;
             this.src = getRunicPlaceholder(char.name);
         };
 
         // 모달창 내부 텍스트 꽂아주기
-        document.getElementById('modal-name').textContent = char.name;
+        document.getElementById('modal-name').textContent = char.name || '-';
         document.getElementById('modal-sub-name').textContent = char.subName || '';
         
         const badge = document.getElementById('modal-badge');
-        badge.textContent = `${char.rank} · ${char.type}`;
-        badge.setAttribute('data-rank', char.rank);
+        badge.textContent = `${char.rank || 'F'} · ${char.type || 'Sentinel'}`;
+        badge.setAttribute('data-rank', char.rank || 'F');
         
         document.getElementById('modal-age').textContent = char.age ? char.age : '-';
         document.getElementById('modal-title').textContent = char.title ? char.title : '-';
         
-        document.getElementById('modal-ability').textContent = char.ability;
+        document.getElementById('modal-ability').textContent = char.ability || '-';
         document.getElementById('modal-desc').innerHTML = parseMarkdown(char.description);
         
         modal.classList.add('active');
