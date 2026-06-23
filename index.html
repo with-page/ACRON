@@ -47,7 +47,7 @@
             font-size: 1rem;
         }
 
-        /* 🔗 [신규] 공식 홈페이지 바로가기 앤틱 버튼 스타일 */
+        /* 공식 홈페이지 바로가기 앤틱 버튼 스타일 */
         .visit-official-btn {
             display: inline-block;
             margin-top: 18px;
@@ -217,14 +217,46 @@
         }
 
         /* ==========================================
-            캐릭터 카드 그리드
+            등급별 분리 정렬 및 카드 컨테이너
         ========================================== */
         .character-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 45px;                 /* 등급 구역별 여백 확보 */
             position: relative;
             z-index: 3;
+        }
+
+        /* 개별 등급 구역 양식 */
+        .rank-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* 고풍스러운 등급 가로 헤더선 소제목 */
+        .rank-section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            color: #7c5829;
+            letter-spacing: 3px;
+            border-bottom: 1px solid rgba(124, 88, 41, 0.25);
+            padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        /* SS 등 특정 핵심 랭크 색상 세련되게 차별화 */
+        .rank-section-title[data-rank="SS"] {
+            color: #aa8628;
+            border-bottom-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* 실제 카드가 배열될 등급별 그리드 하위 판넬 */
+        .rank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
         }
 
         .card {
@@ -298,7 +330,7 @@
         .rank[data-rank="F"] { background: #3d3d3d; color: #fff; }
 
         /* ==========================================
-            상세 정보 모달창 디자인 (글씨 크기 미세 감소 적용)
+            상세 정보 모달창 디자인
         ========================================== */
         .modal-overlay {
             position: fixed;
@@ -334,7 +366,28 @@
                 0 30px 60px rgba(0,0,0,0.7);
             transform: translateY(30px);
             transition: transform 0.3s ease;
+
+            /* 📌 [UX 개선] 모달창 자체가 화면보다 커서 묻히지 않도록 최대 높이 고정 및 내부 스크롤 허용 */
+            max-height: 90vh;
+            overflow-y: auto;
         }
+
+        /* 📌 모달창 자체 양피지풍 커스텀 스크롤바 디자인 */
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(124, 88, 41, 0.05);
+            border-radius: 10px;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: rgba(124, 88, 41, 0.3);
+            border-radius: 10px;
+        }
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(124, 88, 41, 0.5);
+        }
+
         /* 모달 내부 보조 가이드 데코레이션 프레임 선 */
         .modal-content::before {
             content: '';
@@ -364,7 +417,7 @@
             font-weight: bold;
             margin-bottom: 20px;
             position: relative;
-            z-index: 3;
+            z-index: 10; /* 스크롤 시 버튼 레이어 순위 보정 */
             transition: all 0.2s;
         }
         .close-btn:hover { 
@@ -496,7 +549,6 @@
         @media (max-width: 1024px) {
             header h1 { font-size: 2.8rem; letter-spacing: 6px; }
             .registry { padding: 45px 30px; }
-            .character-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 20px; }
         }
 
         @media (max-width: 600px) {
@@ -518,15 +570,53 @@
             .filter-wrapper { gap: 10px; margin-bottom: 25px; }
             .btn { padding: 6px 12px; font-size: 0.85rem; }
             
-            .character-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; }
-            .card-info { padding: 10px; }
+            /* 모바일 화면에서 등급마다 1줄에 딱 4개씩 모이도록 설정 */
+            .character-grid { gap: 25px; }
+            .rank-section { gap: 8px; }
+            .rank-section-title { font-size: 0.95rem; padding-bottom: 3px; gap: 6px; letter-spacing: 2px; }
             
-            /* 모바일 카드 정보 텍스트 크기 조율 */
-            .card-name-group h3 { font-size: 1.05rem; }
-            .card-name-group .sub-name { font-size: 0.75rem; }
-            .rank { font-size: 0.75rem; padding: 2px 8px; }
+            /* 4열 정렬을 강제하기 위해 4fr 비율 적용 및 조밀한 카드 간격(gap) 세팅 */
+            .rank-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 6px !important; }
+            
+            /* 좁아진 모바일 너비(4열) 내에서 텍스트가 넘치거나 카드 높이가 비정상적으로 길어지지 않도록 패딩 및 폰트 축소 */
+            .card { border-radius: 6px; }
+            .card-info { padding: 6px 4px; }
+            
+            /* 모바일 카드 정보 텍스트 크기 극대화 정돈 */
+            .card-name-group { margin-bottom: 4px; }
+            .card-name-group h3 { 
+                font-size: 0.65rem; 
+                letter-spacing: 0px; 
+                line-height: 1.2;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis; /* 영문명 너무 길면 말줄임표 처리 */
+                width: 100%;
+            }
+            .card-name-group .sub-name { 
+                font-size: 0.52rem; 
+                margin-top: 1px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis; /* 한글명 너무 길면 말줄임표 처리 */
+                width: 100%;
+            }
+            .rank { 
+                font-size: 0.48rem; 
+                padding: 1px 4px; 
+                border-radius: 4px;
+                letter-spacing: 0px;
+                transform: scale(0.9); /* 작은 화면에서 디테일 확보 */
+            }
 
-            .modal-content { padding: 30px 20px 20px; width: 95%; border-radius: 80px 12px 70px 10px / 10px 70px 12px 80px; }
+            /* 📌 [UX 개선] 모바일 기기 높이에 맞춰 모달창 카드 높이를 최대 90%로 조절 및 카드 자체 스크롤 활성화 */
+            .modal-content { 
+                padding: 25px 20px 20px; 
+                width: 95%; 
+                max-height: 90vh; /* 화면 아래로 탈출 방지 */
+                overflow-y: auto; /* 카드 자체 내부 스크롤 허용 */
+                border-radius: 80px 12px 70px 10px / 10px 70px 12px 80px; 
+            }
             .modal-content::before { border-radius: 75px 10px 65px 8px / 8px 65px 10px 75px; top: 8px; left: 8px; right: 8px; bottom: 8px; }
             .modal-body { grid-template-columns: 1fr; gap: 15px; }
             
@@ -557,8 +647,8 @@
 <header>
     <h1>ARCRON</h1>
     <p>Character Registry</p>
-    <!-- 📌 [신규 추가] 공식 홈페이지 링크 버튼 (href="#" 부분에 연동할 도메인 주소를 입력하세요!) -->
-    <a href="#" class="visit-official-btn" target="_blank">https://mangosrd.github.io/mmok/</a>
+    <!-- 공식 홈페이지 링크 버튼 (href="#" 부분에 연동할 도메인 주소를 입력하세요!) -->
+    <a href="https://mangosrd.github.io/mmok/" class="visit-official-btn" target="_blank">Visit Official Site</a>
 </header>
 
 <section class="registry">
@@ -570,7 +660,7 @@
 
     <div class="registry-info">
         <h2>Personnel Archive</h2>
-        <!-- [수정] '등록된 요원 수'에서 판타지 세계관에 어울리는 '등재된 서약자 수'로 변경 -->
+        <!-- '등록된 요원 수'에서 판타지 세계관에 어울리는 '등재된 서약자 수'로 변경 -->
         <p>등재된 서약자 수 : <span id="total-count">0</span></p>
         <!-- Sentinel / Guide 실시간 인원 요약 (영문명 유지) -->
         <p class="breakdown-text">Sentinel: <span id="sentinel-count">0</span>명 | Guide: <span id="guide-count">0</span>명</p>
@@ -601,7 +691,7 @@
         </div>
     </div>
 
-    <!-- 캐릭터 그리드 -->
+    <!-- 캐릭터 그리드 (등급별 분리 공간 역할을 하도록 자바스크립트에서 제어) -->
     <div class="character-grid" id="character-grid"></div>
 </section>
 
@@ -616,6 +706,7 @@
                 <div class="modal-header">
                     <div class="modal-name-group">
                         <h2 id="modal-name">Name</h2>
+                        <!-- 버그 수정: 중복되던 rank 배지 태그를 올바른 id="modal-sub-name" 태그로 원상 복구 -->
                         <span id="modal-sub-name" class="modal-sub-name">-</span>
                     </div>
                     <span id="modal-badge" class="rank">Rank</span>
@@ -679,6 +770,7 @@
     function renderCharacters() {
         grid.innerHTML = '';
         
+        // 정렬 우선순위 등급 매칭
         const rankOrder = ['SS', 'S', 'A', 'B', 'C', 'D', 'E', 'F'];
         
         let filtered = characters.filter(char => {
@@ -694,11 +786,6 @@
             return matchesType && matchesRank && matchesSearch;
         });
 
-        // 상위 랭크 정렬
-        filtered.sort((a, b) => {
-            return rankOrder.indexOf(a.rank) - rankOrder.indexOf(b.rank);
-        });
-
         // [통계 고정]: 검색/필터 상태와 상관없이 '전체 데이터'를 기준으로 상단 요약본 고정
         totalCount.textContent = characters.length;
 
@@ -708,26 +795,65 @@
         document.getElementById('guide-count').textContent = guideCount;
 
         if (filtered.length === 0) {
-            grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#7c5829; padding: 40px 0;">검색 결과와 일치하는 요원이 없습니다.</p>`;
+            grid.innerHTML = `<p style="text-align:center; color:#7c5829; padding: 40px 0; font-weight: bold; width:100%;">검색 결과와 일치하는 요원이 없습니다.</p>`;
             return;
         }
 
+        // [신규 로직] 등급별로 요원들을 분할(그룹화)
+        const charactersByRank = {};
+        rankOrder.forEach(r => {
+            charactersByRank[r] = [];
+        });
+
         filtered.forEach(char => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <img src="${char.image}" alt="${char.name}" onerror="this.onerror=null; this.src='https://placehold.co/300x400/eae0c9/3a2c1c?text=${char.name}';">
-                <div class="card-info">
-                    <!-- 대표 영문이름과 한국어 서브네임 출력 -->
-                    <div class="card-name-group">
-                        <h3>${char.name}</h3>
-                        <span class="sub-name">${char.subName || ''}</span>
-                    </div>
-                    <span class="rank" data-rank="${char.rank}">${char.rank} · ${char.type}</span>
-                </div>
-            `;
-            card.addEventListener('click', () => openModal(char));
-            grid.appendChild(card);
+            if (charactersByRank[char.rank]) {
+                charactersByRank[char.rank].push(char);
+            } else {
+                // 등급이 안전 규격 배열에 존재하지 않는 경우를 대비한 방어 코드
+                charactersByRank[char.rank] = [char];
+            }
+        });
+
+        // 등급 순서대로 순회하면서 카드 그리기
+        rankOrder.forEach(r => {
+            const rankList = charactersByRank[r];
+            if (rankList && rankList.length > 0) {
+                // 등급별 컨테이너(section) 생성
+                const section = document.createElement('div');
+                section.className = 'rank-section';
+                
+                // 등급 소제목(Header) 생성
+                const title = document.createElement('h3');
+                title.className = 'rank-section-title';
+                title.setAttribute('data-rank', r);
+                title.innerHTML = `${r} Rank`;
+                
+                // 실제 카드를 담을 미니 그리드 생성
+                const rankGrid = document.createElement('div');
+                rankGrid.className = 'rank-grid';
+                
+                rankList.forEach(char => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${char.image}" alt="${char.name}" onerror="this.onerror=null; this.src='https://placehold.co/300x400/eae0c9/3a2c1c?text=${char.name}';">
+                        <div class="card-info">
+                            <!-- 대표 영문이름과 한국어 서브네임 출력 -->
+                            <div class="card-name-group">
+                                <h3>${char.name}</h3>
+                                <span class="sub-name">${char.subName || ''}</span>
+                            </div>
+                            <span class="rank" data-rank="${char.rank}">${char.rank} · ${char.type}</span>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => openModal(char));
+                    rankGrid.appendChild(card);
+                });
+                
+                section.appendChild(title);
+                section.appendChild(rankGrid);
+                grid.appendChild(section);
+            }
         });
     }
 
@@ -775,9 +901,13 @@
         modal.classList.remove('active');
     });
 
+    // 📌 [UX 개선] 어두운 배경(Overlay) 클릭/터치 시 직관적으로 즉시 닫기 실행
     modal.addEventListener('click', (e) => {
         if (e.target === modal) modal.classList.remove('active');
     });
+    modal.addEventListener('touchstart', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+    }, { passive: true });
 
     // 이벤트 리스너 연동
     searchInput.addEventListener('input', (e) => {
