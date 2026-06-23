@@ -226,14 +226,34 @@
             background: #eae0c9;
         }
         .card-info {
-            padding: 18px 15px;
+            padding: 16px 15px;
             text-align: center;
         }
-        .card-info h3 {
-            font-size: 1.2rem;
+        
+        /* 📌 카드 이름 배치 구역 (세로 정렬) */
+        .card-name-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        /* 영어 대표 이름 (Cinzel 판타지풍 서체로 화사하고 굵게) */
+        .card-name-group h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
             color: #2b1f11;
-            margin-bottom: 8px;
             font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        /* 한국어 풀네임/서브 네임 (작고 부드러운 갈색 톤 세리프) */
+        .card-name-group .sub-name {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 0.82rem;
+            color: #7c5829;
+            margin-top: 4px;
+            font-weight: 500;
+            opacity: 0.85;
         }
 
         /* 등급 뱃지 색상 */
@@ -348,6 +368,7 @@
             background: #eae0c9;
         }
 
+        /* 📌 모달창 내부 요원 이름 배치 (세로 정렬) */
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -355,10 +376,24 @@
             padding-bottom: 12px;
             margin-bottom: 12px;
         }
+        .modal-name-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
         .modal-header h2 {
-            font-size: 1.8rem;
+            font-family: 'Cinzel', serif;
+            font-size: 2rem; /* 모달의 영어 대표 이름은 크게 */
             color: #2b1f11;
             font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .modal-header .modal-sub-name {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 0.95rem; /* 한글 서브명은 작고 부드럽게 */
+            color: #7c5829;
+            font-weight: 500;
         }
         .modal-info hr {
             display: none;
@@ -461,7 +496,10 @@
             
             .character-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; }
             .card-info { padding: 10px; }
-            .card-info h3 { font-size: 0.95rem; }
+            
+            /* 모바일 카드 정보 텍스트 크기 조율 */
+            .card-name-group h3 { font-size: 1.05rem; }
+            .card-name-group .sub-name { font-size: 0.75rem; }
             .rank { font-size: 0.75rem; padding: 2px 8px; }
 
             .modal-content { padding: 30px 20px 20px; width: 95%; border-radius: 80px 12px 70px 10px / 10px 70px 12px 80px; }
@@ -485,7 +523,8 @@
                 max-height: 240px;
                 padding: 14px;
             }
-            .modal-header h2 { font-size: 1.3rem; }
+            .modal-header h2 { font-size: 1.4rem; }
+            .modal-header .modal-sub-name { font-size: 0.82rem; }
         }
     </style>
 </head>
@@ -506,7 +545,7 @@
     <div class="registry-info">
         <h2>Personnel Archive</h2>
         <p>등록된 요원 수 : <span id="total-count">0</span></p>
-        <!-- 📌 Sentinel / Guide 실시간 인원 요약 (영문명 유지) -->
+        <!-- Sentinel / Guide 실시간 인원 요약 (영문명 유지) -->
         <p class="breakdown-text">Sentinel: <span id="sentinel-count">0</span>명 | Guide: <span id="guide-count">0</span>명</p>
     </div>
 
@@ -539,15 +578,19 @@
     <div class="character-grid" id="character-grid"></div>
 </section>
 
-<!-- 상세 정보 모달창 (세부 라벨은 직관적인 한국어로 롤백) -->
+<!-- 상세 정보 모달창 -->
 <div class="modal-overlay" id="detail-modal">
     <div class="modal-content">
         <button class="close-btn" id="close-modal">← 뒤로 가기</button>
         <div class="modal-body">
             <img id="modal-img" src="" alt="캐릭터 이미지">
             <div class="modal-info">
+                <!-- 📌 모달창 헤더 (대문자 영문명 크게 + 풀네임 작게 배치) -->
                 <div class="modal-header">
-                    <h2 id="modal-name">이름</h2>
+                    <div class="modal-name-group">
+                        <h2 id="modal-name">Name</h2>
+                        <span id="modal-sub-name" class="modal-sub-name">-</span>
+                    </div>
                     <span id="modal-badge" class="rank">Rank</span>
                 </div>
                 <div class="modal-sub-info">
@@ -614,7 +657,13 @@
         let filtered = characters.filter(char => {
             const matchesType = (currentType === 'all' || char.type === currentType);
             const matchesRank = (currentRank === 'all' || char.rank === currentRank);
-            const matchesSearch = char.name.toLowerCase().includes(searchQuery.toLowerCase());
+            
+            // 📌 [검색 기능 확장] 대표 영문명("name")과 한국어 풀네임("subName") 모두 검색 대상에 반영
+            const nameLower = char.name.toLowerCase();
+            const subNameLower = (char.subName || '').toLowerCase();
+            const searchLower = searchQuery.toLowerCase();
+            const matchesSearch = nameLower.includes(searchLower) || subNameLower.includes(searchLower);
+            
             return matchesType && matchesRank && matchesSearch;
         });
 
@@ -643,7 +692,11 @@
             card.innerHTML = `
                 <img src="${char.image}" alt="${char.name}" onerror="this.onerror=null; this.src='https://placehold.co/300x400/eae0c9/3a2c1c?text=${char.name}';">
                 <div class="card-info">
-                    <h3>${char.name}</h3>
+                    <!-- 📌 대표 영문이름과 한국어 서브네임 출력 -->
+                    <div class="card-name-group">
+                        <h3>${char.name}</h3>
+                        <span class="sub-name">${char.subName || ''}</span>
+                    </div>
                     <span class="rank" data-rank="${char.rank}">${char.rank} · ${char.type}</span>
                 </div>
             `;
@@ -675,7 +728,9 @@
             this.src = 'https://placehold.co/300x400/eae0c9/3a2c1c?text=' + char.name;
         };
 
+        // 📌 모달창 내부 텍스트 꽂아주기
         document.getElementById('modal-name').textContent = char.name;
+        document.getElementById('modal-sub-name').textContent = char.subName || '';
         
         const badge = document.getElementById('modal-badge');
         badge.textContent = `${char.rank} · ${char.type}`;
