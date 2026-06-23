@@ -59,20 +59,20 @@
             background-position: center;  
             background-repeat: no-repeat; 
             
-            /* 1) 📌 [핵심 수공예 연출] 불규칙하게 오려낸 듯 파동치는 곡선 모서리 처리 */
+            /* 불규칙하게 오려낸 듯 파동치는 곡선 모서리 처리 */
             border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
             
             /* 손그림 느낌이 나는 거칠고 은은한 양피지 실 테두리 */
             border: 1px solid rgba(139, 115, 85, 0.5);
             padding: 60px 50px;
             
-            /* 2) 📌 [핵심 세월 효과] 외곽으로 갈수록 타들어 가듯 그을린 비네팅(Vignette) 섀도우 극대화 */
+            /* 외곽으로 갈수록 타들어 가듯 그을린 비네팅(Vignette) 섀도우 극대화 */
             box-shadow: 
                 inset 0 0 80px rgba(92, 67, 40, 0.4), 
                 0 30px 80px rgba(0, 0, 0, 0.8);
         }
 
-        /* 3) 📌 [고급 장식] 양피지 안쪽을 따라 흐르는 수작업 가이드 선 프레임 */
+        /* 양피지 안쪽을 따라 흐르는 수작업 가이드 선 프레임 */
         .registry::before {
             content: '';
             position: absolute;
@@ -87,7 +87,7 @@
             z-index: 1;
         }
 
-        /* 4) 📌 [황동 데코] 모서리를 품격 있게 잡아주는 앤틱 코너 브래킷 드로잉 */
+        /* 모서리를 품격 있게 잡아주는 앤틱 코너 브래킷 드로잉 */
         .corner-ornament {
             position: absolute;
             width: 28px;
@@ -114,6 +114,18 @@
             font-size: 1.8rem;
             color: #5c4328;
             letter-spacing: 2px;
+        }
+        
+        /* 가이드/센티넬 요약 텍스트 양식 */
+        .breakdown-text {
+            font-size: 0.95rem;
+            color: #7c5829;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+        .breakdown-text span {
+            font-weight: bold;
+            color: #5c4328;
         }
 
         /* ==========================================
@@ -243,7 +255,7 @@
         .rank[data-rank="F"] { background: #3d3d3d; color: #fff; }
 
         /* ==========================================
-            상세 정보 모달창 디자인
+            상세 정보 모달창 디자인 (글씨 크기 미세 감소 적용)
         ========================================== */
         .modal-overlay {
             position: fixed;
@@ -262,14 +274,13 @@
             pointer-events: auto;
         }
 
-        /* 📜 모달창 상자 (따뜻한 양피지 이미지 + 손으로 오려낸 모서리 처리 세트) */
+        /* 📜 모달창 상자 */
         .modal-content {
             background: url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?q=80&w=1200');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             
-            /* 📌 모달창도 메인 보드와 세트로 불규칙 양피지 커팅 연출 */
             border-radius: 120px 20px 100px 15px / 15px 100px 25px 110px;
             border: 2px solid #b39262;
             width: min(850px, 92%);
@@ -281,7 +292,7 @@
             transform: translateY(30px);
             transition: transform 0.3s ease;
         }
-        /* 📌 모달 내부 보조 가이드 데코레이션 프레임 선 */
+        /* 모달 내부 보조 가이드 데코레이션 프레임 선 */
         .modal-content::before {
             content: '';
             position: absolute;
@@ -345,7 +356,7 @@
             margin-bottom: 12px;
         }
         .modal-header h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #2b1f11;
             font-weight: 700;
         }
@@ -368,7 +379,7 @@
             margin-bottom: 0;
         }
         .modal-sub-info .info-item p {
-            font-size: 1.05rem;
+            font-size: 1.01rem;
             font-weight: normal;
             color: #3d3021;
         }
@@ -380,7 +391,7 @@
         .info-item strong { 
             display: inline-block; 
             color: #7c5829; 
-            font-size: 0.85rem; 
+            font-size: 0.8rem;
             letter-spacing: 1px;
             background: rgba(124, 88, 41, 0.12); 
             padding: 3px 8px;
@@ -389,7 +400,7 @@
         .info-item p { 
             color: #3d3021; 
             line-height: 1.6; 
-            font-size: 1.05rem; 
+            font-size: 0.98rem;
             margin-top: 6px;
         }
 
@@ -401,16 +412,16 @@
             padding: 20px;
             max-height: 340px;
             overflow-y: auto;
-            font-size: 0.98rem;
+            font-size: 0.92rem;
             color: #443525;
-            line-height: 1.75;
+            line-height: 1.7;
         }
 
         /* 마크다운 파서 스타일링 */
         #modal-desc strong {
             background: transparent;
             color: #943a26;
-            font-size: 1.05rem;
+            font-size: 0.98rem;
             padding: 0;
             margin: 15px 0 6px;
             display: block;
@@ -474,7 +485,7 @@
                 max-height: 240px;
                 padding: 14px;
             }
-            .modal-header h2 { font-size: 1.4rem; }
+            .modal-header h2 { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -494,20 +505,22 @@
 
     <div class="registry-info">
         <h2>Personnel Archive</h2>
-        <p>Registered Personnel : <span id="total-count">0</span></p>
+        <p>등록된 요원 수 : <span id="total-count">0</span></p>
+        <!-- 📌 Sentinel / Guide 실시간 인원 요약 (영문명 유지) -->
+        <p class="breakdown-text">Sentinel: <span id="sentinel-count">0</span>명 | Guide: <span id="guide-count">0</span>명</p>
     </div>
 
-    <!-- 검색창 -->
+    <!-- 검색창 (한국어화) -->
     <div class="search-box">
-        <input type="text" id="search-input" placeholder="이름을 입력하세요...">
+        <input type="text" id="search-input" placeholder="요원 이름을 입력하세요...">
     </div>
 
-    <!-- 필터 그룹 -->
+    <!-- 필터 그룹 (전체는 한국어, Sentinel/Guide는 고유 영문명 유지) -->
     <div class="filter-wrapper">
         <div class="filter-group" id="type-filters">
             <button class="btn active" data-filter="all">전체</button>
-            <button class="btn" data-filter="Sentinel">센티넬</button>
-            <button class="btn" data-filter="Guide">가이드</button>
+            <button class="btn" data-filter="Sentinel">Sentinel</button>
+            <button class="btn" data-filter="Guide">Guide</button>
         </div>
         <div class="filter-group" id="rank-filters">
             <button class="btn active" data-rank="all">ALL RANK</button>
@@ -526,7 +539,7 @@
     <div class="character-grid" id="character-grid"></div>
 </section>
 
-<!-- 상세 정보 모달창 -->
+<!-- 상세 정보 모달창 (세부 라벨은 직관적인 한국어로 롤백) -->
 <div class="modal-overlay" id="detail-modal">
     <div class="modal-content">
         <button class="close-btn" id="close-modal">← 뒤로 가기</button>
@@ -535,7 +548,7 @@
             <div class="modal-info">
                 <div class="modal-header">
                     <h2 id="modal-name">이름</h2>
-                    <span id="modal-badge" class="rank">등급</span>
+                    <span id="modal-badge" class="rank">Rank</span>
                 </div>
                 <div class="modal-sub-info">
                     <div class="info-item">
@@ -553,7 +566,7 @@
                 </div>
                 <div class="info-item">
                     <strong>상세 설명</strong>
-                    <p id="modal-desc">상세 설명 내용</p>
+                    <p id="modal-desc">상세 설명 내용이 여기에 표시됩니다.</p>
                 </div>
             </div>
         </div>
@@ -561,87 +574,7 @@
 </div>
 
 <script>
-    // 📌 [통합 데이터베이스] 캐릭터들의 모든 정보와 긴 설명 마크다운을 변수 하나로 임베드
-    const characters = [
-      {
-        "id": 1,
-        "name": "리비안",
-        "type": "Guide",
-        "rank": "SS",
-        "image": "images/rivian.png",
-        "age": "24",
-        "title": "공작",
-        "ability": "몽환의 나비",
-        "description": "여명의 숲을 다스리는 최상위 가이드 요원."
-      },
-      {
-        "id": 2,
-        "name": "세릭",
-        "type": "Guide",
-        "rank": "SS",
-        "image": "images/rick.jpg",
-        "age": "27",
-        "title": "후작",
-        "ability": "성운의 결계",
-        "description": "우에에엥."
-      },
-      {
-        "id": 3,
-        "name": "카엘",
-        "type": "Guide",
-        "rank": "SS",
-        "image": "images/kael.jpg",
-        "age": "29",
-        "title": "백작",
-        "ability": "성역의 빛",
-        "description": "빛과 신성 권능을 활용하여 센티넬의 광폭화와 상처를 정화하는 치유계 요원."
-      },
-      {
-        "id": 4,
-        "name": "-",
-        "type": "Sentinel",
-        "rank": "SS",
-        "image": "images/-.jpg",
-        "age": "-",
-        "title": "-",
-        "ability": "-",
-        "description": "-."
-      },
-      {
-        "id": 5,
-        "name": "-",
-        "type": "Sentinel",
-        "rank": "A",
-        "image": "images/-.jpg",
-        "age": "-",
-        "title": "-",
-        "ability": "-",
-        "description": "-."
-      },
-      {
-        "id": 6,
-        "name": "-",
-        "type": "Sentinel",
-        "rank": "D",
-        "image": "images/-.jpg",
-        "age": "-",
-        "title": "-",
-        "ability": "-",
-        "description": "-."
-      },
-      {
-        "id": 7,
-        "name": "엘리샤",
-        "type": "Guide",
-        "rank": "E",
-        "image": "images/-.jpg",
-        "age": "20",
-        "title": "백작",
-        "ability": "리빙 캔버스",
-        "description": "그림으로 그려진 형상을 실체화하거나 버프로 재현하는 특수 물질계 능력. 상상력의 시각화 메커니즘을 기반으로 하며, 그림의 형태와 생각에 따라 발현되는 권능이 달라진다.////**• 센티넬 신체 각인**//대상의 폭주 수치를 완화함과 동시에 각인이 유지되는 동안 신체 출력을 일정 수준 증폭시킨다.////**• 형상 구현**//무기, 방어구, 도구 등 사용자가 상상한 물체를 일시적으로 실체화할 수 있으며, 구현된 형상은 실제 물질과 동일한 기능을 수행한다. 일정량의 물리적 충격을 흡수하면 자동으로 소멸한다. 가이드의 직관적 상상력에 의존하므로 가끔 의도와 다른 엉뚱한 외형으로 형상화되기도 한다.////**• 제약**//동시에 유지 가능한 형상의 수에는 한계가 존재한다.//구현된 형상은 영구적으로 유지되지 않는다.//생명체를 창조하거나 완전한 재현은 불가능하다.////**[ 부작용 ]**//능력 사용 시 사용자의 정신력을 대가로 소모한다.//소모량이 누적될 경우 강한 피로감과 졸음이 발생하며, 과도한 사용 시 환각·인지 저하·판단력 저하 증세가 나타난다."
-      }
-    ];
-
+    let characters = []; // 외부 data.json으로부터 동적으로 주입받기 위해 빈 배열로 환원
     let currentType = 'all';
     let currentRank = 'all';
     let searchQuery = '';
@@ -651,6 +584,26 @@
     const searchInput = document.getElementById('search-input');
     const modal = document.getElementById('detail-modal');
     const closeModalBtn = document.getElementById('close-modal');
+
+    // 📌 [동적 데이터 로드] 외부 data.json 파일 가져오기
+    async function loadCharacters() {
+        try {
+            const response = await fetch('data.json');
+            characters = await response.json();
+            renderCharacters();
+        } catch (error) {
+            console.error("Error loading character database:", error);
+            grid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align:center; color:#943a26; padding: 40px 20px; background: rgba(255,253,247,0.85); border-radius: 8px; border: 1px dashed #b39262;">
+                    <p style="font-weight: bold; font-size: 1.1rem; margin-bottom: 10px;">⚠️ 데이터 파일을 불러오지 못했습니다.</p>
+                    <p style="font-size: 0.9rem; color: #6a4e29; line-height: 1.5;">
+                        현재 로컬 환경(컴퓨터 더블클릭)에서 실행하여 브라우저 CORS 보안 경고가 발생했거나, data.json 파일 경로가 잘못되었을 수 있습니다.<br>
+                        이 현상은 <strong>GitHub Pages에 올리시면 완벽하게 해결</strong>됩니다!
+                    </p>
+                </div>
+            `;
+        }
+    }
 
     // 화면 렌더링 함수
     function renderCharacters() {
@@ -670,7 +623,14 @@
             return rankOrder.indexOf(a.rank) - rankOrder.indexOf(b.rank);
         });
 
+        // 총 인원수 업데이트
         totalCount.textContent = filtered.length;
+
+        // 필터링된 센티넬, 가이드 실시간 인원 수 계산 및 동적 반영
+        const sentinelCount = filtered.filter(char => char.type === 'Sentinel').length;
+        const guideCount = filtered.filter(char => char.type === 'Guide').length;
+        document.getElementById('sentinel-count').textContent = sentinelCount;
+        document.getElementById('guide-count').textContent = guideCount;
 
         if (filtered.length === 0) {
             grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#7c5829; padding: 40px 0;">검색 결과와 일치하는 요원이 없습니다.</p>`;
@@ -699,7 +659,7 @@
         html = html.split('//').join('<br>');
         html = html.replace(/\*\*([\s\S]*?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/__([\s\S]*?)__/g, '<strong>$1</strong>');
-        html = html.replace(/\*([\s\S]*?)\*\/g, '<em>$1</em>');
+        html = html.replace(/\*([\s\S]*?)\*/g, '<em>$1</em>');
         html = html.replace(/_([\s\S]*?)_/g, '<em>$1</em>');
         html = html.replace(/~~([\s\S]*?)~~/g, '<del>$1</del>');
         html = html.replace(/___([\s\S]*?)___/g, '<u>$1</u>');
@@ -760,8 +720,8 @@
         renderCharacters();
     });
 
-    // 초기 로딩
-    renderCharacters();
+    // 초기 로딩 (외부 파일 fetch)
+    loadCharacters();
 </script>
 </body>
 </html>
