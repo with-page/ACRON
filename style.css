@@ -161,7 +161,9 @@ header p {
     margin-bottom: 8px;
 }
 
-/* 등급 뱃지 색상 */
+/* ==========================================
+    🎨 등급별 고유 색상 마킹 (SS ~ F 완비)
+========================================== */
 .rank {
     display: inline-block;
     padding: 3px 12px;
@@ -170,14 +172,17 @@ header p {
     font-weight: bold;
     letter-spacing: 1px;
 }
-.rank[data-rank="SS"] { background: #d4af37; color: #fff; }
-.rank[data-rank="S"] { background: #e26d5c; color: #fff; }
-.rank[data-rank="A"] { background: #9b5de5; color: #fff; }
-.rank[data-rank="B"] { background: #00bbf9; color: #fff; }
-.rank[data-rank="C"], .rank[data-rank="D"], .rank[data-rank="F"] { background: #8d99ae; color: #fff; }
+.rank[data-rank="SS"] { background: #d4af37; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+.rank[data-rank="S"] { background: #c13526; color: #fff; }
+.rank[data-rank="A"] { background: #804fb3; color: #fff; }
+.rank[data-rank="B"] { background: #1a5f7a; color: #fff; }
+.rank[data-rank="C"] { background: #5f6f52; color: #fff; }
+.rank[data-rank="D"] { background: #7e8a95; color: #fff; }
+.rank[data-rank="E"] { background: #506266; color: #fff; }
+.rank[data-rank="F"] { background: #3d3d3d; color: #fff; }
 
 /* ==========================================
-    상세 정보 모달창 (팝업 레이아웃)
+    상세 정보 모달창 (팝업 레이아웃 및 크기 제어)
 ========================================== */
 .modal-overlay {
     position: fixed;
@@ -229,7 +234,7 @@ header p {
     align-items: start;
 }
 
-/* 모달 이미지 크기 제어 고정 구역 */
+/* 📌 모달 내부 거대 이미지 방지용 제한 코드 */
 .modal-body img {
     width: 100%;
     max-height: 450px;
@@ -289,7 +294,7 @@ header p {
     }
 }
 
-/* 2. 스마트폰 화면 */
+/* 2. 스마트폰 화면 (세로 모드 2열 꽉 찬 최적화) */
 @media (max-width: 600px) {
     header {
         padding: 40px 10px 20px;
@@ -355,7 +360,7 @@ header p {
     }
     
     .modal-body img {
-        max-height: 280px; /* 모바일 전용 이미지 최대 높이 조절 */
+        max-height: 280px; /* 모바일 전용 이미지 크기 틀 고정 */
     }
     
     .modal-header h2 {
