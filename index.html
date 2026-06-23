@@ -679,7 +679,7 @@
                 width: 100%;
             }
             
-            /* 📌 [버그 수정] 모바일 화면 축소 스타일을 .card .rank로 한정하여 모달창의 배지(#modal-badge)는 영향받지 않게 격리 */
+            /* [버그 수정] 모바일 화면 축소 스타일을 .card .rank로 한정하여 모달창의 배지(#modal-badge)는 영향받지 않게 격리 */
             .card .rank { 
                 font-size: 0.48rem; 
                 padding: 1px 4px; 
@@ -702,7 +702,7 @@
                 top: 8px; left: 8px; right: 8px; bottom: 8px; 
             }
             
-            /* 📌 [모바일 가이드 폰트 복구] 모달 내 랭크 배지(#modal-badge)는 모바일 화면에서도 큼직하고 뚜렷하게 복원 */
+            /* [모바일 가이드 폰트 복구] 모달 내 랭크 배지(#modal-badge)는 모바일 화면에서도 큼직하고 뚜렷하게 복원 */
             #modal-badge {
                 font-size: 0.8rem !important;
                 padding: 3px 10px !important;
@@ -838,6 +838,26 @@
     const searchInput = document.getElementById('search-input');
     const modal = document.getElementById('detail-modal');
     const closeModalBtn = document.getElementById('close-modal');
+
+    // 📌 [신규 추가 및 버그 수정] 에러 발생 시 노출할 웅장한 룬 마법진 플레이스홀더 SVG 동적 생성 함수
+    function getRunicPlaceholder(name) {
+        const escapedName = name ? name.replace(/['"<>]/g, '') : 'ARCRON';
+        const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="100%" height="100%">
+                <rect width="300" height="400" fill="#eae0c9"/>
+                <rect x="15" y="15" width="270" height="370" fill="none" stroke="#7c5829" stroke-width="1" stroke-dasharray="4,4"/>
+                <rect x="20" y="20" width="260" height="360" fill="none" stroke="#8b7355" stroke-width="1"/>
+                <circle cx="150" cy="180" r="70" fill="none" stroke="#8b7355" stroke-width="1.5" stroke-dasharray="5,3"/>
+                <circle cx="150" cy="180" r="60" fill="none" stroke="#7c5829" stroke-width="1"/>
+                <polygon points="150,115 195,210 105,210" fill="none" stroke="#8b7355" stroke-width="1"/>
+                <polygon points="150,245 105,150 195,150" fill="none" stroke="#8b7355" stroke-width="1"/>
+                <path d="M 25 40 L 40 25 M 275 40 L 260 25 M 25 360 L 40 375 M 275 360 L 260 375" stroke="#7c5829" stroke-width="1"/>
+                <text x="150" y="295" font-family="'Cinzel', serif" font-size="16" font-weight="bold" fill="#3a2c1c" text-anchor="middle" letter-spacing="2">${escapedName}</text>
+                <text x="150" y="320" font-family="'Noto Serif KR', serif" font-size="10" fill="#7c5829" text-anchor="middle" letter-spacing="1">NO IMAGE</text>
+            </svg>
+        `;
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg.trim());
+    }
 
     // [동적 데이터 로드] 외부 data.json 파일 가져오기
     async function loadCharacters() {
