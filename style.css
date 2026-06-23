@@ -361,7 +361,13 @@ header p {
 
     .modal-content { padding: 20px; width: 95%; }
     .modal-body { grid-template-columns: 1fr; gap: 15px; }
-    .modal-body img { max-height: 280px; }
+.modal-body img { 
+        width: 100%;
+        max-height: 380px;      /* 모바일에서 보기 좋게 최대 높이를 조금 더 넓혔습니다 */
+        object-fit: contain;    /* 이미지가 잘리지 않고 전체가 다 나오도록 고정 */
+        background: #eae0c9;    /* 좌우 여백이 남을 때 자연스럽게 채워줄 배경색 */
+        border-radius: 10px;
+    }
     
     .modal-sub-info { padding: 8px 12px; gap: 10px; }
     
