@@ -219,23 +219,94 @@ header p {
     grid-template-columns: 1fr 1.3fr;
     gap: 25px;
 }
+/* ==========================================
+   📱 모바일 & 태블릿 반응형 레이아웃 최적화
+========================================== */
+
+/* 1. 태블릿 이하 화면 (브라우저 창을 줄였을 때) */
+@media (max-width: 1024px) {
+    header h1 {
+        font-size: 3.2rem; /* 헤더 크기 살짝 축소 */
+        letter-spacing: 8px;
+    }
+    .registry {
+        padding: 30px 20px; /* 양피지 내부 여백 줄여서 카드 공간 확보 */
+    }
+    .character-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* 화면에 맞춰 카드 자동 배치 */
+        gap: 15px; /* 카드 사이 간격 좁히기 */
+    }
+}
+
+/* 2. 스마트폰 화면 (세로 모드 일반 휴대폰) */
 @media (max-width: 600px) {
-    .modal-body { grid-template-columns: 1fr; }
+    header {
+        padding: 40px 10px 20px; /* 헤더 여백 축소 */
+    }
+    header h1 {
+        font-size: 2.2rem; /* 폰트 크기 모바일에 맞춤 */
+        letter-spacing: 4px;
+    }
+    header p {
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+    }
+
+    .registry {
+        padding: 20px 12px; /* 휴대폰 양옆 여백을 최소화해서 꽉 차게 변경 */
+        border-radius: 8px; /* 모바일에서는 테두리를 살짝 부드럽게만 */
+    }
+    .registry-info h2 {
+        font-size: 1.4rem;
+    }
+
+    /* 검색창과 필터 버튼 정렬 */
+    .search-box {
+        margin-bottom: 20px;
+    }
+    .search-box input {
+        padding: 10px 18px; /* 터치하기 편하되 너무 뚱뚱하지 않게 */
+        font-size: 0.95rem;
+    }
+
+    .filter-wrapper {
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+    .btn {
+        padding: 6px 12px; /* 버튼 크기를 줄여서 모바일에서 덜 깨지게 함 */
+        font-size: 0.85rem;
+    }
+
+    /* 📌 핵심: 모바일에서 무조건 한 줄에 카드 2개씩 이쁘게 나오도록 고정 */
+    .character-grid {
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 12px;
+    }
+    .card-info {
+        padding: 10px; /* 카드 내부 여백 줄임 */
+    }
+    .card-info h3 {
+        font-size: 0.95rem; /* 캐릭터 이름 크기 최적화 */
+    }
+    .rank {
+        font-size: 0.75rem; /* 랭크 글씨 크기 최적화 */
+        padding: 2px 8px;
+    }
+
+    /* 모바일 상세 팝업(모달) 창 최적화 */
+    .modal-content {
+        padding: 20px;
+        width: 95%; /* 화면에 거의 꽉 차게 */
+    }
+    .modal-body {
+        grid-template-columns: 1fr; /* 이미지와 텍스트를 위아래로 배치 */
+        gap: 15px;
+        max-height: 70vh; /* 세로가 너무 길어지면 스크롤 생기도록 */
+        overflow-y: auto;
+    }
+    .modal-header h2 {
+        font-size: 1.3rem;
+    }
 }
-.modal-body img {
-    width: 100%;
-    border-radius: 6px;
-    border: 1px solid #cbb38d;
-}
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-.modal-info hr {
-    border: 0; height: 1px; background: rgba(120,80,40,0.2); margin-bottom: 15px;
-}
-.info-item { margin-bottom: 15px; }
-.info-item strong { display: block; color: #7c5829; margin-bottom: 5px; font-size: 0.95rem; }
-.info-item p { color: #4a3b2c; line-height: 1.5; font-size: 1rem; }
+   
