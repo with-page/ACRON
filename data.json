@@ -17,5 +17,23 @@
     "image": "images/rick.jpg",
     "ability": "성운의 결계",
     "description": "우에에엥."
+  },
+  {
+    "id": 3,
+    "name": "-",
+    "type": "Guide",
+    "rank": "A",
+    "image": "images/-.jpg",
+    "ability": "-",
+    "description": "-."
+  },
+  {
+    "id": 4,
+    "name": "-",
+    "type": "Guide",
+    "rank": "E",
+    "image": "images/-.jpg",
+    "ability": "-",
+    "description": "-."
   }
-]
+  
